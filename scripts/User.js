@@ -3,6 +3,10 @@ import React,{Component } from 'react';
 import * as SocketIO from 'socket.io-client';
 
 var socket = SocketIO.connect();
+socket.on('connect', function() {
+ console.log('Connecting to the server!');
+})
+  socket.on('disconnect');
 var UsersList = React.createClass({
   render() {
       return (
@@ -138,6 +142,7 @@ var ChatApp = React.createClass({
       socket.on('user:join', this._userJoined);
       socket.on('user:left', this._userLeft);
       socket.on('change:name', this._userChangedName);
+    
   },
 
   _initialize(data) {
