@@ -1,6 +1,6 @@
 # app.py
 import os, flask, flask_socketio
-from flask_socketio import emit
+from flask_socketio import emit,send
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
@@ -18,16 +18,12 @@ def getName():
 @app.route('/')
 def hello():
  return flask.render_template('index.html')
- 
 
-  
-
-     
 @socketio.on('connect')
 def on_connect():
  global names
  username=getName()
- socketio.emit('init',{'users':names,'name':username},broadcast=False)
+ emit('init',{'users':names,'name':username},namespace='/')
  socketio.emit('user:join', {'name': username},broadcast=True,include_self=False)  
 
  
