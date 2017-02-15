@@ -3,49 +3,38 @@ import React,{Component } from 'react';
 import * as SocketIO from 'socket.io-client';
 
 var socket = SocketIO.connect();
-socket.on('connect', function() {
- console.log('Connecting to the server!');
-})
-  socket.on('disconnect');
-var UsersList = React.createClass({
-  render() {
-      return (
-          <div className='users' id='users'>
-              <h3> Online Users </h3>
-              <ul>
-                  {
-                      this.props.users.map((user, i) => {
-                          return (
-                              <li key={i}>
-                                  {user}
-                              </li>
-                          );
-                      })
-                  }
-              </ul>                
-          </div>
-      );
-  }
+socket.emit('connect',function() {
+console.log("Connected")
 });
 
+socket.on('disconnect', function() {
 
-
-var Message = React.createClass({
-  render() {
-      return (
-          <div className="message" id='message'>
-              <strong>{this.props.user} :</strong> 
-              <span>{this.props.text}</span>        
-          </div>
-      );
-  }
 });
 
+  
 
+ class User extends React.Component {
+ render() {
+ return <div>{this.props.name} <img  src={this.props.src}/></div>;
+ }
+ }
+ class UserList extends React.Component {
+ render() {
+ const listItems = this.props.users.map((a,index) => {
+ return <User key={index} name={a} />;
+ });
+ return (
+ <div id='users'>
+   Online Users
+ <ul>{listItems}</ul>
+ </div>
+ );
+ }
+}
 var MessageList = React.createClass({
   render() {
       return (
-          <div className='messages' id='messageList'>
+          <div className='messages'id="messageList">
               <h2> Conversation: </h2>
               {
                   this.props.messages.map((message, i) => {
@@ -62,7 +51,16 @@ var MessageList = React.createClass({
       );
   }
 });
-
+var Message = React.createClass({
+  render() {
+      return (
+          <div className="message">
+              <strong>{this.props.user} :</strong> 
+              <span>{this.props.text}</span>        
+          </div>
+      );
+  }
+});
 var MessageForm = React.createClass({
 
   getInitialState() {
@@ -85,9 +83,9 @@ var MessageForm = React.createClass({
 
   render() {
       return(
-          <div className='message_form' id='chatBox'>
-              <form onSubmit={this.handleSubmit} width='50%'>
-              Chat:
+          <div className='message_form' id="chatBox">
+              <h3>Write New Message</h3>
+              <form onSubmit={this.handleSubmit}>
                   <input
                       onChange={this.changeHandler}
                       value={this.state.text}
@@ -98,36 +96,7 @@ var MessageForm = React.createClass({
   }
 });
 
-var ChangeNameForm = React.createClass({
-  getInitialState() {
-      return {newName: ''};
-  },
 
-  onKey(e) {
-      this.setState({ newName : e.target.value });
-  },
-
-  handleSubmit(e) {
-      e.preventDefault();
-      var newName = this.state.newName;
-      this.props.onChangeName(newName);    
-      this.setState({ newName: '' });
-  },
-
-  render() {
-      return(
-          <div className='change_name_form' id='changeNameForm'>
-              <h3> Change Name </h3>
-              <form onSubmit={this.handleSubmit}>
-                  <input
-                      onChange={this.onKey}
-                      value={this.state.newName}
-                  />
-              </form>  
-          </div>
-      );
-  }
-});
 
 
 var ChatApp = React.createClass({
@@ -137,16 +106,16 @@ var ChatApp = React.createClass({
   },
 
   componentDidMount() {
+      
       socket.on('init', this._initialize);
       socket.on('send:message', this._messageRecieve);
       socket.on('user:join', this._userJoined);
       socket.on('user:left', this._userLeft);
-      socket.on('change:name', this._userChangedName);
-    
   },
 
   _initialize(data) {
       var {users, name} = data;
+      console.log(data);
       this.setState({users, user: name});
   },
 
@@ -176,6 +145,7 @@ var ChatApp = React.createClass({
           user: 'APPLICATION BOT',
           text : name +' Left'
       });
+      console.log(messages.name)
       this.setState({users, messages});
   },
 
@@ -195,6 +165,7 @@ var ChatApp = React.createClass({
       var {messages} = this.state;
       messages.push(message);
       this.setState({messages});
+      console.log(message.name)
       socket.emit('send:message', message);
   },
 
@@ -214,7 +185,7 @@ var ChatApp = React.createClass({
   render() {
       return (
           <div>
-              <UsersList
+              <UserList
                   users={this.state.users}
               />
               <MessageList
@@ -238,36 +209,25 @@ class GiveMeACat extends Component {
       fetchedData: React.PropTypes.string,
     };
   }
-  
+
   componentDidMount() {
-    fetch('https://api.gettyimages.com/v3/search/images?fields=id,title,thumb,referral_destinations&sort_order=best&phrase=world', {
-      headers: {
-        'Content-Type': 'application/json',
-        'Api-Key': ''
-      }  })
-    .then((response) => response.json())
-    .then((json) => {
-    
-      if (json.images) {
-        console.log(json)
-        this.setState({
+    this.setState({
           fetchedData: 'http://media.gettyimages.com/photos/-id546767922'
-        
+
         });
-      }
-    })
+
   }
-  
+
   render() {
     console.log(this.state.fetchedData);
     return (
-      
+
       <div>
         {
-            
-            <img  src={this.state.fetchedData} alt="Cuteness"  />
-      
-         
+
+            <img id="background"  src={this.state.fetchedData} alt="Cuteness"  />
+
+
         }
       </div>
     );

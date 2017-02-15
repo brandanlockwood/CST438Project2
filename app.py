@@ -3,25 +3,48 @@ import os, flask, flask_socketio
 from flask_socketio import emit
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
+
+names=[]
+srcs=[]
+i=0
+def getName():
+   global i
+   i=i+1
+   newName='guest'+str(i)
+   print newName
+   names.append(newName)
+   return newName
+   
 @app.route('/')
 def hello():
  return flask.render_template('index.html')
  
+
+  
+
+     
 @socketio.on('connect')
 def on_connect():
- print 'Someone connected!'
+ global names
+ username=getName()
+ socketio.emit('init',{'users':names,'name':username},broadcast=False)
+ socketio.emit('user:join', {'name': username},broadcast=True,include_self=False)  
 
-@socketio.on('disconnect')
-def user_connect():
- print 'user joined'
  
 @socketio.on('send:message')
 def message_in(message):
+    print message
     socketio.emit('send:message',message, broadcast=True,include_self=False)
-    
-@socketio.on('init')
-def initial_in(something):
- print something+' ewfnawlengawnemglemwklamg'
+ 
+@socketio.on('disconnect')
+def on_disconnect():
+ global names,i
+ del names[0];
+ i=i-1;
+
+
+
+ 
 
 
       #socket.on('send:message', this._messageRecieve);
