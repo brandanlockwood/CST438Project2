@@ -12,16 +12,17 @@ socket.on('disconnect', function() {
 });
 
   
-
+//User class with user name and image
  class User extends React.Component {
  render() {
- return <div>{this.props.name} <img  src={this.props.src}/></div>;
+ return <div>{this.props.name} <img id="userImage" src={this.props.src}/></div>;
  }
  }
  class UserList extends React.Component {
  render() {
- const listItems = this.props.users.map((a,index) => {
- return <User key={index} name={a} />;
+ const listItems = this.props.users.map((user,index) => {
+   console.log(user)
+ return <User key={index} name={user["name"]} src={user["src"]} />;
  });
  return (
  <div id='users'>
@@ -38,11 +39,14 @@ var MessageList = React.createClass({
               <h2> Conversation: </h2>
               {
                   this.props.messages.map((message, i) => {
+                  console.log(message);
                       return (
+                      
                           <Message
                               key={i}
                               user={message.user}
                               text={message.text}
+                              src={message.src}
                           />
                       );
                   })
@@ -55,6 +59,7 @@ var Message = React.createClass({
   render() {
       return (
           <div className="message">
+             <img id="userImage" src={this.props.src} />
               <strong>{this.props.user} :</strong> 
               <span>{this.props.text}</span>        
           </div>
@@ -71,7 +76,8 @@ var MessageForm = React.createClass({
       e.preventDefault();
       var message = {
           user : this.props.user,
-          text : this.state.text
+          text : this.state.text,
+          src  : this.props.src
       }
       this.props.onMessageSubmit(message); 
       this.setState({ text: '' });
@@ -111,12 +117,14 @@ var ChatApp = React.createClass({
       socket.on('send:message', this._messageRecieve);
       socket.on('user:join', this._userJoined);
       socket.on('user:left', this._userLeft);
+      socket.on('bot',this._botMessage)
+      
   },
 
   _initialize(data) {
-      var {users, name} = data;
-      console.log(data);
-      this.setState({users, user: name});
+      var {users, name,src} = data;
+      console.log(src);
+      this.setState({users, user: name,src: src});
   },
 
   _messageRecieve(message) {
@@ -124,14 +132,24 @@ var ChatApp = React.createClass({
       messages.push(message);
       this.setState({messages});
   },
+  _botMessage(message)
+  {
+    var {messages} = this.state
+     messages.push({ user: 'APPLICATION BOT',
+          text : message,
+          src :'https://i.ytimg.com/vi/kpvKA0vhaT0/maxresdefault.jpg'});
+      this.setState({messages});
+  },
 
   _userJoined(data) {
       var {users, messages} = this.state;
-      var {name} = data;
-      users.push(name);
+      var {name,src} = data;
+      console.log(data+ "efwwwwwwwwwwwwwwwwwwwwwwwww")
+      users.push({'name':name,'src':src});
       messages.push({
           user: 'APPLICATION BOT',
-          text : name +' Joined'
+          text : name +' Joined',
+          src :'https://i.ytimg.com/vi/kpvKA0vhaT0/maxresdefault.jpg'
       });
       this.setState({users, messages});
   },
@@ -149,38 +167,28 @@ var ChatApp = React.createClass({
       this.setState({users, messages});
   },
 
-  _userChangedName(data) {
-      var {oldName, newName} = data;
-      var {users, messages} = this.state;
-      var index = users.indexOf(oldName);
-      users.splice(index, 1, newName);
-      messages.push({
-          user: 'APPLICATION BOT',
-          text : 'Change Name : ' + oldName + ' ==> '+ newName
-      });
-      this.setState({users, messages});
-  },
+
 
   handleMessageSubmit(message) {
       var {messages} = this.state;
       messages.push(message);
       this.setState({messages});
-      console.log(message.name)
+     console.log(message)
       socket.emit('send:message', message);
+      if(message.text=="!! about")
+      {
+        socket.emit('bot',"This room is for authorized potatos only");
+      }else if(message.text=="!! help")
+      {
+        socket.emit('bot',"!! about -gives description of room\n"
+        +"!! help -gives all commands of the room\n"
+        +"!! say <something> makes me say <something>\n"
+        +"!! potato will find a picture of a potato\n")
+      }
+      
   },
 
-  handleChangeName(newName) {
-      var oldName = this.state.user;
-      socket.emit('change:name', { name : newName}, (result) => {
-          if(!result) {
-              return alert('There was an error changing your name');
-          }
-          var {users} = this.state;
-          var index = users.indexOf(oldName);
-          users.splice(index, 1, newName);
-          this.setState({users, user: newName});
-      });
-  },
+  
 
   render() {
       return (
@@ -194,6 +202,7 @@ var ChatApp = React.createClass({
               <MessageForm
                   onMessageSubmit={this.handleMessageSubmit}
                   user={this.state.user}
+                  src={this.state.src}
               />
               
           </div>
@@ -245,4 +254,3 @@ export class Chat extends React.Component {
     );
   }
 }
-

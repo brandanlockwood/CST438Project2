@@ -13347,6 +13347,8 @@ socket.emit('connect', function () {
 
 socket.on('disconnect', function () {});
 
+//User class with user name and image
+
 var User = function (_React$Component) {
     _inherits(User, _React$Component);
 
@@ -13364,7 +13366,7 @@ var User = function (_React$Component) {
                 null,
                 this.props.name,
                 ' ',
-                _react2.default.createElement('img', { src: this.props.src })
+                _react2.default.createElement('img', { id: 'userImage', src: this.props.src })
             );
         }
     }]);
@@ -13384,8 +13386,9 @@ var UserList = function (_React$Component2) {
     _createClass(UserList, [{
         key: 'render',
         value: function render() {
-            var listItems = this.props.users.map(function (a, index) {
-                return _react2.default.createElement(User, { key: index, name: a });
+            var listItems = this.props.users.map(function (user, index) {
+                console.log(user);
+                return _react2.default.createElement(User, { key: index, name: user["name"], src: user["src"] });
             });
             return _react2.default.createElement(
                 'div',
@@ -13415,10 +13418,12 @@ var MessageList = _react2.default.createClass({
                 ' Conversation: '
             ),
             this.props.messages.map(function (message, i) {
+                console.log(message);
                 return _react2.default.createElement(Message, {
                     key: i,
                     user: message.user,
-                    text: message.text
+                    text: message.text,
+                    src: message.src
                 });
             })
         );
@@ -13430,6 +13435,7 @@ var Message = _react2.default.createClass({
         return _react2.default.createElement(
             'div',
             { className: 'message' },
+            _react2.default.createElement('img', { id: 'userImage', src: this.props.src }),
             _react2.default.createElement(
                 'strong',
                 null,
@@ -13453,7 +13459,8 @@ var MessageForm = _react2.default.createClass({
         e.preventDefault();
         var message = {
             user: this.props.user,
-            text: this.state.text
+            text: this.state.text,
+            src: this.props.src
         };
         this.props.onMessageSubmit(message);
         this.setState({ text: '' });
@@ -13493,13 +13500,15 @@ var ChatApp = _react2.default.createClass({
         socket.on('send:message', this._messageRecieve);
         socket.on('user:join', this._userJoined);
         socket.on('user:left', this._userLeft);
+        socket.on('bot', this._botMessage);
     },
     _initialize: function _initialize(data) {
         var users = data.users,
-            name = data.name;
+            name = data.name,
+            src = data.src;
 
-        console.log(data);
-        this.setState({ users: users, user: name });
+        console.log(src);
+        this.setState({ users: users, user: name, src: src });
     },
     _messageRecieve: function _messageRecieve(message) {
         var messages = this.state.messages;
@@ -13507,16 +13516,27 @@ var ChatApp = _react2.default.createClass({
         messages.push(message);
         this.setState({ messages: messages });
     },
+    _botMessage: function _botMessage(message) {
+        var messages = this.state.messages;
+
+        messages.push({ user: 'APPLICATION BOT',
+            text: message,
+            src: 'https://i.ytimg.com/vi/kpvKA0vhaT0/maxresdefault.jpg' });
+        this.setState({ messages: messages });
+    },
     _userJoined: function _userJoined(data) {
         var _state = this.state,
             users = _state.users,
             messages = _state.messages;
-        var name = data.name;
+        var name = data.name,
+            src = data.src;
 
-        users.push(name);
+        console.log(data + "efwwwwwwwwwwwwwwwwwwwwwwwww");
+        users.push({ 'name': name, 'src': src });
         messages.push({
             user: 'APPLICATION BOT',
-            text: name + ' Joined'
+            text: name + ' Joined',
+            src: 'https://i.ytimg.com/vi/kpvKA0vhaT0/maxresdefault.jpg'
         });
         this.setState({ users: users, messages: messages });
     },
@@ -13535,43 +13555,18 @@ var ChatApp = _react2.default.createClass({
         console.log(messages.name);
         this.setState({ users: users, messages: messages });
     },
-    _userChangedName: function _userChangedName(data) {
-        var oldName = data.oldName,
-            newName = data.newName;
-        var _state3 = this.state,
-            users = _state3.users,
-            messages = _state3.messages;
-
-        var index = users.indexOf(oldName);
-        users.splice(index, 1, newName);
-        messages.push({
-            user: 'APPLICATION BOT',
-            text: 'Change Name : ' + oldName + ' ==> ' + newName
-        });
-        this.setState({ users: users, messages: messages });
-    },
     handleMessageSubmit: function handleMessageSubmit(message) {
         var messages = this.state.messages;
 
         messages.push(message);
         this.setState({ messages: messages });
-        console.log(message.name);
+        console.log(message);
         socket.emit('send:message', message);
-    },
-    handleChangeName: function handleChangeName(newName) {
-        var _this3 = this;
-
-        var oldName = this.state.user;
-        socket.emit('change:name', { name: newName }, function (result) {
-            if (!result) {
-                return alert('There was an error changing your name');
-            }
-            var users = _this3.state.users;
-
-            var index = users.indexOf(oldName);
-            users.splice(index, 1, newName);
-            _this3.setState({ users: users, user: newName });
-        });
+        if (message.text == "!! about") {
+            socket.emit('bot', "This room is for authorized potatos only");
+        } else if (message.text == "!! help") {
+            socket.emit('bot', "!! about -gives description of room\n" + "!! help -gives all commands of the room\n" + "!! say <something> makes me say <something>\n" + "!! potato will find a picture of a potato\n");
+        }
     },
     render: function render() {
         return _react2.default.createElement(
@@ -13585,7 +13580,8 @@ var ChatApp = _react2.default.createClass({
             }),
             _react2.default.createElement(MessageForm, {
                 onMessageSubmit: this.handleMessageSubmit,
-                user: this.state.user
+                user: this.state.user,
+                src: this.state.src
             })
         );
     }
@@ -13599,12 +13595,12 @@ var GiveMeACat = function (_Component) {
     function GiveMeACat(props) {
         _classCallCheck(this, GiveMeACat);
 
-        var _this4 = _possibleConstructorReturn(this, (GiveMeACat.__proto__ || Object.getPrototypeOf(GiveMeACat)).call(this, props));
+        var _this3 = _possibleConstructorReturn(this, (GiveMeACat.__proto__ || Object.getPrototypeOf(GiveMeACat)).call(this, props));
 
-        _this4.state = {
+        _this3.state = {
             fetchedData: _react2.default.PropTypes.string
         };
-        return _this4;
+        return _this3;
     }
 
     _createClass(GiveMeACat, [{

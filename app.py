@@ -4,7 +4,7 @@ from flask_socketio import emit,send
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
-names=[]
+names=[{"name":"APPLICATION BOT","src":"https://i.ytimg.com/vi/kpvKA0vhaT0/maxresdefault.jpg"}]
 srcs=[]
 i=0
 def getName():
@@ -12,7 +12,7 @@ def getName():
    i=i+1
    newName='guest'+str(i)
    print newName
-   names.append(newName)
+   #names.append(newName)
    return newName
    
 @app.route('/')
@@ -23,15 +23,21 @@ def hello():
 def on_connect():
  global names
  username=getName()
- emit('init',{'users':names,'name':username},namespace='/')
- socketio.emit('user:join', {'name': username},broadcast=True,include_self=False)  
+ names.append({'name':username,'src':'imageURL'})
+ emit('init',{'users':names,'name':username,'src':'imageURL'},namespace='/')
+ socketio.emit('user:join', {'name': username,'src':'imageURL'},broadcast=True,include_self=False)  
+
 
  
 @socketio.on('send:message')
 def message_in(message):
     print message
     socketio.emit('send:message',message, broadcast=True,include_self=False)
- 
+
+@socketio.on('bot')
+def bot_message(message):
+ socketio.emit('bot',message, broadcast=True,include_self=True)
+  
 @socketio.on('disconnect')
 def on_disconnect():
  global names,i

@@ -2,6 +2,11 @@ body{
     margin:0;
     height:100%;
 }
+#userImage
+{
+ width:50;
+ height:50;
+}
 #user
 {
     background-color:red;
@@ -31,10 +36,14 @@ body{
   
   
 }
+#message {
+
+width:500px;
+}
 #users
 {
     height:70%;
-  width:20%;
+  width:24%;
   position: absolute;
   font-size: 30px;
   font-weight: bold;
@@ -45,7 +54,7 @@ body{
 }
 #messageList{
   height:70%;
-  width:50%;
+  width:60%;
   position: absolute;
   font-size: 30px;
   font-weight: bold;
