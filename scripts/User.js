@@ -108,7 +108,7 @@ var MessageForm = React.createClass({
 var ChatApp = React.createClass({
 
   getInitialState() {
-      return {users: [], messages:[], text: '',responseGoogle:[],numberOfUsers:0,show:false};
+      return {users: [], messages:[], text: '',failureGoogle:[],successGoogle:[],numberOfUsers:0,show:false};
   },
 
   componentDidMount() {
@@ -129,17 +129,20 @@ var ChatApp = React.createClass({
   {
        
     console.log(data);
-     this.state.responseGoogle = (response) => {
-       if(response!=null)
-       {
-  //console.log(response);
-  //console.log(response["profileObj"].imageUrl);
-  //console.log(response["profileObj"].name);
-  socket.emit("login",{'name':response["profileObj"].name,'url':response["profileObj"].imageUrl});
-  this.state.show=true;
-       }
-  
-}
+     this.state.successGoogle = (response) => {
+       
+      console.log(response);
+      //console.log(response["profileObj"].imageUrl);
+      //console.log(response["profileObj"].name);
+      socket.emit("login",{'name':response["profileObj"].name,'url':response["profileObj"].imageUrl});
+      this.state.show=true;
+       
+     }
+       this.state.failureGoogle= (response) => {
+          
+          console.error(response)
+          }
+        
     
   },
   _initialize(data) {
@@ -267,8 +270,8 @@ var ChatApp = React.createClass({
            <GoogleLogin
     clientId={key}
     buttonText="Login"
-    onSuccess={this.state.responseGoogle}
-    onFailure={this.state.responseGoogle}
+    onSuccess={this.state.successGoogle}
+    onFailure={this.state.failureGoogle}
        />
        </div>
           )
