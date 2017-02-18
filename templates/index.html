@@ -1,16 +1,35 @@
 <html>
     <head>
-          <meta name="google-signin-client_id" content="263414884222-cks8c3nqflg1u6i4m8dmd1asukgfp235.apps.googleusercontent.com">
     </head>
     <body>
-        <div id="status"></div>
-        <fb:login-button scope="public_profile,email" onlogin="testAPI();">
-        </fb:login-button>
-         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-        <div id="content"></div>
+     <div id="content"></div>
+        <div id="Fbutton"></div>
+        <div id="googleButton"></div>
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='App.css') }}">
         <script type="text/javascript" src="/static/script.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+        
+     
+ <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '101547387036328',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+        
+
+  
 
     </body>
 </html>

@@ -1,16 +1,16 @@
-
+import {key} from './keys'
 import React,{Component } from 'react';
 import * as SocketIO from 'socket.io-client';
+import GoogleLogin from 'react-google-login';
+
+
+
 
 var socket = SocketIO.connect();
-socket.emit('connect',function() {
-console.log("Connected")
-});
 
-socket.on('disconnect', function() {
-
-});
-
+  socket.on('connect',function() {
+      
+      });
   
 //User class with user name and image
  class User extends React.Component {
@@ -26,7 +26,6 @@ socket.on('disconnect', function() {
  });
  return (
  <div id='users'>
-   Online Users
  <ul>{listItems}</ul>
  </div>
  );
@@ -90,9 +89,10 @@ var MessageForm = React.createClass({
   render() {
       return(
           <div className='message_form' id="chatBox">
-              <h3>Write New Message</h3>
+           
               <form onSubmit={this.handleSubmit}>
-                  <input
+               <input
+                      
                       onChange={this.changeHandler}
                       value={this.state.text}
                   />
@@ -108,22 +108,47 @@ var MessageForm = React.createClass({
 var ChatApp = React.createClass({
 
   getInitialState() {
-      return {users: [], messages:[], text: ''};
+      return {users: [], messages:[], text: '',responseGoogle:[],numberOfUsers:0,show:false};
   },
 
   componentDidMount() {
-      
+     
+     
+      socket.on('login',this._login);
       socket.on('init', this._initialize);
       socket.on('send:message', this._messageRecieve);
       socket.on('user:join', this._userJoined);
       socket.on('user:left', this._userLeft);
-      socket.on('bot',this._botMessage)
-      
+      socket.on('bot',this._botMessage);
+      socket.on('disconnect',function(){
+        
+      });
   },
 
+  _login(data)
+  {
+       
+    //console.log(data);
+     this.state.responseGoogle = (response) => {
+       if(response!=null)
+       {
+  //console.log(response);
+  //console.log(response["profileObj"].imageUrl);
+  //console.log(response["profileObj"].name);
+  socket.emit("login",{'name':response["profileObj"].name,'url':response["profileObj"].imageUrl});
+  this.state.show=true;
+       }
+  
+}
+    
+  },
   _initialize(data) {
       var {users, name,src} = data;
-      console.log(src);
+    
+      if(src!='')
+      {
+      this.state.numberOfUsers=users.length-1;
+      }
       this.setState({users, user: name,src: src});
   },
 
@@ -137,34 +162,39 @@ var ChatApp = React.createClass({
     var {messages} = this.state
      messages.push({ user: 'APPLICATION BOT',
           text : message,
-          src :'https://i.ytimg.com/vi/kpvKA0vhaT0/maxresdefault.jpg'});
+          src :'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'});
       this.setState({messages});
   },
 
   _userJoined(data) {
       var {users, messages} = this.state;
       var {name,src} = data;
-      console.log(data+ "efwwwwwwwwwwwwwwwwwwwwwwwww")
+      
+      console.log(data)
       users.push({'name':name,'src':src});
       messages.push({
           user: 'APPLICATION BOT',
           text : name +' Joined',
-          src :'https://i.ytimg.com/vi/kpvKA0vhaT0/maxresdefault.jpg'
+          src :'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'
       });
-      this.setState({users, messages});
+       this.state.numberOfUsers=users.length-1;
+      this.setState({users, messages},this.numberOfUsers);
   },
 
   _userLeft(data) {
+    
       var {users, messages} = this.state;
-      var {name} = data;
-      var index = users.indexOf(name);
+      var {name,src} = data;
+      console.log(data + "wsefwfewfewfewfwelijfioewajfjowejfo")
+      var index = users.indexOf({'name':name,src: 'src'});
       users.splice(index, 1);
       messages.push({
           user: 'APPLICATION BOT',
-          text : name +' Left'
+          text : name +' Left',
+          src :'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'
       });
-      console.log(messages.name)
-      this.setState({users, messages});
+      this.state.numberOfUsers=users.length-1
+      this.setState({users, messages},this.numberOfUsers);
   },
 
 
@@ -173,18 +203,35 @@ var ChatApp = React.createClass({
       var {messages} = this.state;
       messages.push(message);
       this.setState({messages});
-     console.log(message)
+     console.log(message.text)
       socket.emit('send:message', message);
-      if(message.text=="!! about")
+      if(message.text.includes("!! about"))
       {
         socket.emit('bot',"This room is for authorized potatos only");
-      }else if(message.text=="!! help")
+      }else if(message.text.includes("!! help"))
       {
         socket.emit('bot',"!! about -gives description of room\n"
         +"!! help -gives all commands of the room\n"
-        +"!! say <something> makes me say <something>\n"
-        +"!! potato will find a picture of a potato\n")
+        +"!! say <something> -makes me say <something>\n"
+        +"!! chatBot <somethign> -say something to chatterbot \n"
+        +"!! smile -to make bot a little happier");
       }
+      else if(message.text.includes("!! say"))
+      {
+        var text = message.text.replace("!! say","");
+        socket.emit('bot',text);
+      }else if (message.text.includes("!! smile"))
+      {
+        socket.emit('bot',"=]");
+        
+      }else if(message.text.includes("!! chatBot"))
+      {
+        socket.emit('bot',message.text);
+      }else if(message.text.includes("!!"))
+      {
+        socket.emit('bot',"Sorry I didn't get that");
+      }
+      
       
   },
 
@@ -192,10 +239,17 @@ var ChatApp = React.createClass({
 
   render() {
       return (
+       
           <div>
+          {this.state.show ? (
+         <div>
+              <div id="OnlineUsers" id="online" >
+              <h2>"Online Users "{this.state.numberOfUsers}</h2>
+              </div>
               <UserList
                   users={this.state.users}
               />
+              
               <MessageList
                   messages={this.state.messages}
               />
@@ -204,8 +258,23 @@ var ChatApp = React.createClass({
                   user={this.state.user}
                   src={this.state.src}
               />
-              
+       </div>
+          ):(
+      
+      
+            <div  id="Login">
+            <h2>Login</h2>
+           <GoogleLogin
+    clientId={key}
+    buttonText="Login"
+    onSuccess={this.state.responseGoogle}
+    onFailure={this.state.responseGoogle}
+       />
+       </div>
+          )
+          }
           </div>
+        
       );
   }
 });
@@ -248,7 +317,8 @@ export class Chat extends React.Component {
   render() {
     return (
       <div className="Chat">
-       <ChatApp/>
+    
+       <ChatApp />
         <GiveMeACat />
       </div>
     );

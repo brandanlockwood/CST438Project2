@@ -1,10 +1,19 @@
 # app.py
 import os, flask, flask_socketio
 from flask_socketio import emit,send
+from chatterbot import ChatBot
+
 app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
+chatbot = ChatBot(
+    'Ron Obvious',
+    trainer='chatterbot.trainers.ChatterBotCorpusTrainer'
+)
 
-names=[{"name":"APPLICATION BOT","src":"https://i.ytimg.com/vi/kpvKA0vhaT0/maxresdefault.jpg"}]
+# Train based on the english corpus
+chatbot.train("chatterbot.corpus.english")
+
+names=[{"name":"APPLICATION BOT","src":"http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217","id":0}]
 srcs=[]
 i=0
 def getName():
@@ -23,10 +32,19 @@ def hello():
 def on_connect():
  global names
  username=getName()
- names.append({'name':username,'src':'imageURL'})
- emit('init',{'users':names,'name':username,'src':'imageURL'},namespace='/')
- socketio.emit('user:join', {'name': username,'src':'imageURL'},broadcast=True,include_self=False)  
-
+ print "%s USER CONNECTED " %  flask.request.sid
+ #names.append({'name':username,'src':'imageURL','id':flask.request.sid})
+ emit('login','Login stuff')
+ emit('init',{'users':[],'name':'','src':''},namespace='/')
+ #socketio.emit('user:join', {'name': username,'src':'imageURL'},broadcast=True,include_self=False)  
+@socketio.on('login')
+def login(data):
+ print data['url']
+ print data['name']
+ print data
+ names.append({'name':data['name'],'src':data['url'],'id':flask.request.sid})
+ emit('init',{'users':names,'name':data['name'],'src':data['url']},namespace='/')
+ socketio.emit('user:join', {'name': data['name'],'src':data['url']},broadcast=True,include_self=False)
 
  
 @socketio.on('send:message')
@@ -34,15 +52,31 @@ def message_in(message):
     print message
     socketio.emit('send:message',message, broadcast=True,include_self=False)
 
+
 @socketio.on('bot')
 def bot_message(message):
- socketio.emit('bot',message, broadcast=True,include_self=True)
+ command="!! chatBot"
+ print message
+ print command in message
+ if(command in message and "!! help" not in message):
+  newMessage=message.replace(command,"")
+  newMessage=str(chatbot.get_response(message))
+  print repr(newMessage)
+  socketio.emit('bot',newMessage,broadcast=True,include_self=True)
+ else:
+  socketio.emit('bot',message, broadcast=True,include_self=True)
   
 @socketio.on('disconnect')
 def on_disconnect():
- global names,i
- del names[0];
- i=i-1;
+ print "USER DISCONNECTED"
+ for key in names:
+   if key["id"]==flask.request.sid:
+    socketio.emit("user:left",key)
+    names.remove(key)
+    
+  
+
+
 
 
 
