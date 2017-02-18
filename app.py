@@ -14,7 +14,7 @@ chatbot = ChatBot(
 chatbot.train("chatterbot.corpus.english")
 
 names=[{"name":"APPLICATION BOT","src":"http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217","id":0}]
-srcs=[]
+
 i=0
 def getName():
    global i

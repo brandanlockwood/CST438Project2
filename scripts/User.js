@@ -128,7 +128,7 @@ var ChatApp = React.createClass({
   _login(data)
   {
        
-    //console.log(data);
+    console.log(data);
      this.state.responseGoogle = (response) => {
        if(response!=null)
        {
