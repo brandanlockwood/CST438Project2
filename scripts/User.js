@@ -131,7 +131,7 @@ var ChatApp = React.createClass({
     console.log(data);
      this.state.successGoogle = (response) => {
        
-      console.log(response);
+      //console.log(response);
       //console.log(response["profileObj"].imageUrl);
       //console.log(response["profileObj"].name);
       socket.emit("login",{'name':response["profileObj"].name,'url':response["profileObj"].imageUrl});
