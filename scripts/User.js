@@ -2,6 +2,7 @@ import {key} from './keys'
 import React,{Component } from 'react';
 import * as SocketIO from 'socket.io-client';
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 
 
 
@@ -142,12 +143,24 @@ var ChatApp = React.createClass({
           
           console.error(response)
           }
+          
+          
+         this.state.responseFacebook = (response) => {
+           if(response["accessToken"]!=undefined)
+           {
+           socket.emit("facebookLogin",response["accessToken"])
+           this.state.show=true;
+           }
+         };
+
         
     
   },
   _initialize(data) {
-      var {users, name,src} = data;
-    
+      var {users, name,src,messages} = data;
+      
+      this.state.messages=messages;
+      console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
       if(src!='')
       {
       this.state.numberOfUsers=users.length-1;
@@ -263,16 +276,28 @@ var ChatApp = React.createClass({
               />
        </div>
           ):(
-      
-      
+     
             <div  id="Login">
+           
+    
+
             <h2>Login</h2>
-           <GoogleLogin
-    clientId={key}
-    buttonText="Login"
-    onSuccess={this.state.successGoogle}
-    onFailure={this.state.failureGoogle}
-       />
+             
+             <FacebookLogin
+          appId="101547387036328"
+          autoLoad
+          buttonStyle={ { fontSize: 40 } }
+          callback={this.state.responseFacebook}
+         
+        />
+
+            <h2> </h2>
+          <GoogleLogin
+            clientId={key}
+            buttonText="Login"
+            onSuccess={this.state.successGoogle}
+            onFailure={this.state.failureGoogle}
+            />
        </div>
           )
           }

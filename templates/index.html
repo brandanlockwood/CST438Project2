@@ -2,13 +2,9 @@
     <head>
     </head>
     <body>
-     <div id="content"></div>
+     
         <div id="Fbutton"></div>
         <div id="googleButton"></div>
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='App.css') }}">
-        <script type="text/javascript" src="/static/script.js"></script>
-        
-     
  <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -27,8 +23,9 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
-        
-
+<div id="content"></div>        
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='App.css') }}">
+        <script type="text/javascript" src="/static/script.js"></script>
   
 
     </body>
