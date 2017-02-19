@@ -13343,8 +13343,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -13412,6 +13410,8 @@ var UserList = function (_React$Component2) {
 
     return UserList;
 }(_react2.default.Component);
+//Message List 
+
 
 var MessageList = _react2.default.createClass({
     displayName: 'MessageList',
@@ -13419,11 +13419,6 @@ var MessageList = _react2.default.createClass({
         return _react2.default.createElement(
             'div',
             { className: 'messages', id: 'messageList' },
-            _react2.default.createElement(
-                'h2',
-                null,
-                ' Conversation: '
-            ),
             this.props.messages.map(function (message, i) {
                 console.log(message);
                 return _react2.default.createElement(Message, {
@@ -13436,6 +13431,7 @@ var MessageList = _react2.default.createClass({
         );
     }
 });
+//Message Component includes picture,user name,text
 var Message = _react2.default.createClass({
     displayName: 'Message',
     render: function render() {
@@ -13482,6 +13478,7 @@ var MessageForm = _react2.default.createClass({
             _react2.default.createElement(
                 'form',
                 { onSubmit: this.handleSubmit },
+                'CHAT:',
                 _react2.default.createElement('input', {
 
                     onChange: this.changeHandler,
@@ -13536,7 +13533,6 @@ var ChatApp = _react2.default.createClass({
             name = data.name,
             src = data.src,
             messages = data.messages;
-
 
         this.state.messages = messages;
         console.log(this.state.messages + 'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
@@ -13626,17 +13622,27 @@ var ChatApp = _react2.default.createClass({
                 null,
                 _react2.default.createElement(
                     'div',
-                    _defineProperty({ id: 'OnlineUsers' }, 'id', 'online'),
+                    { id: 'onlineUsers' },
                     _react2.default.createElement(
                         'h2',
                         null,
-                        '"Online Users "',
+                        'Online Users ',
                         this.state.numberOfUsers
                     )
                 ),
                 _react2.default.createElement(UserList, {
                     users: this.state.users
                 }),
+                _react2.default.createElement(
+                    'div',
+                    { id: 'messageHeader' },
+                    '  ',
+                    _react2.default.createElement(
+                        'h2',
+                        null,
+                        ' Conversation: '
+                    )
+                ),
                 _react2.default.createElement(MessageList, {
                     messages: this.state.messages
                 }),
@@ -13696,7 +13702,7 @@ var GiveMeACat = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.setState({
-                fetchedData: 'http://media.gettyimages.com/photos/-id546767922'
+                fetchedData: 'http://media.gettyimages.com/photos/-id171153429'
 
             });
         }

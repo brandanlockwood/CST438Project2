@@ -4,6 +4,9 @@ from flask_socketio import emit,send
 from chatterbot import ChatBot
 #TODO:Facebook login
 app = flask.Flask(__name__)
+
+#import models
+
 socketio = flask_socketio.SocketIO(app)
 chatbot = ChatBot(
     'Ron Obvious',
@@ -41,9 +44,7 @@ def on_connect():
 @socketio.on('login')
 def login(data):
  global messages
- print data['url']
- print data['name']
- print data
+ conv=messages.reverse()
  names.append({'name':data['name'],'src':data['url'],'id':flask.request.sid})
  emit('init',{'users':names,'name':data['name'],'src':data['url'],'messages':messages},namespace='/')
  socketio.emit('user:join', {'name': data['name'],'src':data['url']},broadcast=True,include_self=False)
@@ -53,6 +54,7 @@ def login(data):
 
 @socketio.on("facebookLogin")
 def facebookLogin(data):
+  global messages
   print data
   response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='+ data)
   json = response.json()
@@ -80,7 +82,7 @@ def bot_message(message):
   newMessage=message.replace(command,"")
   newMessage=str(chatbot.get_response(message))
   print repr(newMessage)
-  messages.append(message)
+  messages.append(newMessage)
   socketio.emit('bot',newMessage,broadcast=True,include_self=True)
  else:
   messages.append(message)
@@ -97,22 +99,10 @@ def on_disconnect():
           'src':'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'})
     names.remove(key)
     
-  
-
-
-
-
-
- 
-
-
-      #socket.on('send:message', this._messageRecieve);
-      #socket.on('user:join', this._userJoined);
-      #socket.on('user:left', this._userLeft);
-      #socket.on('change:name', this._userChangedName);
-socketio.run(
+if __name__ == '__main__':# __name__!
+ socketio.run(
  app,
  host=os.getenv('IP', '0.0.0.0'),
  port=int(os.getenv('PORT', 8080)),
  debug=True
-)
+ )

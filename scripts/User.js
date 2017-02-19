@@ -32,11 +32,11 @@ var socket = SocketIO.connect();
  );
  }
 }
+//Message List 
 var MessageList = React.createClass({
   render() {
       return (
           <div className='messages'id="messageList">
-              <h2> Conversation: </h2>
               {
                   this.props.messages.map((message, i) => {
                   console.log(message);
@@ -55,6 +55,7 @@ var MessageList = React.createClass({
       );
   }
 });
+//Message Component includes picture,user name,text
 var Message = React.createClass({
   render() {
       return (
@@ -92,7 +93,7 @@ var MessageForm = React.createClass({
           <div className='message_form' id="chatBox">
            
               <form onSubmit={this.handleSubmit}>
-               <input
+              CHAT:<input
                       
                       onChange={this.changeHandler}
                       value={this.state.text}
@@ -158,7 +159,6 @@ var ChatApp = React.createClass({
   },
   _initialize(data) {
       var {users, name,src,messages} = data;
-      
       this.state.messages=messages;
       console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
       if(src!='')
@@ -259,13 +259,13 @@ var ChatApp = React.createClass({
           <div>
           {this.state.show ? (
          <div>
-              <div id="OnlineUsers" id="online" >
-              <h2>"Online Users "{this.state.numberOfUsers}</h2>
+              <div id="onlineUsers"  >
+              <h2>Online Users {this.state.numberOfUsers}</h2>
               </div>
               <UserList
                   users={this.state.users}
               />
-              
+               <div id="messageHeader" >  <h2> Conversation: </h2></div>
               <MessageList
                   messages={this.state.messages}
               />
@@ -318,7 +318,7 @@ class GiveMeACat extends Component {
 
   componentDidMount() {
     this.setState({
-          fetchedData: 'http://media.gettyimages.com/photos/-id546767922'
+          fetchedData: 'http://media.gettyimages.com/photos/-id171153429'
 
         });
 
