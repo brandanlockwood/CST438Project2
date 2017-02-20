@@ -76,7 +76,7 @@ background-color:rgba(255, 51,0,0.4);
     left:0.5%;
      top:2%;
      width:24%;
-     font-size: 30px;
+     font-size: 20px;
   font-family: 'Wallpoet', sans-serif;
 color:rgb(192,192,192);
      position: absolute;
@@ -85,28 +85,27 @@ color:rgb(192,192,192);
 }
 #users
 {
+    overflow-y: auto;
     border-radius: 25px;
     left:0.5%;
-     top:14%;
+     top:18%;
     height:70%;
   width:24%;
   position: absolute;
-  font-size: 30px;
+  font-size: 20px;
  font-family: 'Wallpoet', sans-serif;
   background-color:rgba(0,0,0,0.75);
 color:rgb(192,192,192);
 }
-#googleButton{
-    
-}
+
 #messageHeader
 {
-    top:-0.2%;
+    top:2%;
     border-radius: 13px;
     text-align:center;
    left:25%; 
    width:60%;
-   font-size: 50px;
+   font-size: 20px;
 font-family: 'Wallpoet', sans-serif;
    position: absolute;
    background-color:rgba(0,0,0,0.75);
@@ -117,13 +116,13 @@ color:rgb(192,192,192);
     padding-top:15px;
     border-radius: 10px;
     text-align:center;
-  height:70%;
+  height:78%;
   width:60%;
   position: absolute;
-  font-size: 35px;
+  font-size: 25px;
 font-family: 'Wallpoet', sans-serif;
 color:rgb(192,192,192);
-  top:20%;
+  top:12%;
   left:25%;
   background-color:rgba(0,0,0,0.7);
   overflow-y: auto;

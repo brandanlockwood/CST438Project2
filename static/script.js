@@ -13521,7 +13521,7 @@ var ChatApp = _react2.default.createClass({
     _login: function _login(data) {
         var _this3 = this;
 
-        console.log(data);
+        //console.log(data);
         this.state.successGoogle = function (response) {
             socket.emit("login", { 'name': response["profileObj"].name, 'url': response["profileObj"].imageUrl });
             _this3.state.show = true;
@@ -13545,8 +13545,8 @@ var ChatApp = _react2.default.createClass({
             messages = data.messages;
 
         this.state.messages = messages;
-        console.log(data);
-        console.log(this.state.messages + 'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
+        //console.log(data)
+        //console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
         if (src != '') {
             this.state.numberOfUsers = users.length - 1;
         }
@@ -13573,8 +13573,8 @@ var ChatApp = _react2.default.createClass({
         var name = data.name,
             src = data.src;
 
+        //console.log(data)
 
-        console.log(data);
         users.push({ 'name': name, 'src': src });
         messages.push({
             user: 'APPLICATION BOT',
@@ -13607,7 +13607,7 @@ var ChatApp = _react2.default.createClass({
 
         messages.push(message);
         this.setState({ messages: messages });
-        console.log(message.text);
+        //console.log(message.text)
         socket.emit('send:message', message);
         if (message.text.includes("!! about")) {
             socket.emit('bot', "This room is for authorized potatos only");
@@ -13720,7 +13720,7 @@ var GiveMeACat = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.state.fetchedData);
+            //console.log(this.state.fetchedData);
             return _react2.default.createElement(
                 'div',
                 null,

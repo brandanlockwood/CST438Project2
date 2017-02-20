@@ -145,7 +145,7 @@ var ChatApp = React.createClass({
   _login(data)
   {
        
-    console.log(data);
+    //console.log(data);
      this.state.successGoogle = (response) => {
       socket.emit("login",{'name':response["profileObj"].name,'url':response["profileObj"].imageUrl});
       this.state.show=true;
@@ -171,8 +171,8 @@ var ChatApp = React.createClass({
   _initialize(data) {
       var {users, name,src,messages} = data;
       this.state.messages=messages;
-      console.log(data)
-      console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
+      //console.log(data)
+      //console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
       if(src!='')
       {
       this.state.numberOfUsers=users.length-1;
@@ -198,7 +198,7 @@ var ChatApp = React.createClass({
       var {users, messages} = this.state;
       var {name,src} = data;
       
-      console.log(data)
+      //console.log(data)
       users.push({'name':name,'src':src});
       messages.push({
           user: 'APPLICATION BOT',
@@ -231,7 +231,7 @@ var ChatApp = React.createClass({
       var {messages} = this.state;
       messages.push(message);
       this.setState({messages});
-     console.log(message.text)
+      //console.log(message.text)
       socket.emit('send:message', message);
       if(message.text.includes("!! about"))
       {
@@ -337,7 +337,7 @@ class GiveMeACat extends Component {
   }
 
   render() {
-    console.log(this.state.fetchedData);
+    //console.log(this.state.fetchedData);
     return (
 
       <div>

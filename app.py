@@ -3,7 +3,7 @@ import os, flask, flask_socketio,requests
 from flask_socketio import emit,send
 from chatterbot import ChatBot
 import json
-#TODO:Facebook login
+
 app = flask.Flask(__name__)
 
 import models
@@ -61,8 +61,8 @@ def facebookLogin(data):
   #Get all messages 
   messages=models.ChatMessage.query.all()
   for m in messages:
-   print m.name
-   print m
+   #print m.name
+   #print m
    #setup list to push down to client
    messageList.append({'user':m.name,'src':m.src,'text':m.text})
   response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='+ data)
@@ -81,14 +81,12 @@ def facebookLogin(data):
  
 @socketio.on('send:message')
 def message_in(message):
-    global messages
-    print message["text"]
+    #print message["text"]
     #messages.append(message)
     #add message to db
     newMessage=models.ChatMessage(message["user"],message["src"],message["text"])
     models.db.session.add(newMessage)
     models.db.session.commit()
-    print message
     socketio.emit('send:message',message, broadcast=True,include_self=False)
 
 
@@ -118,6 +116,7 @@ def bot_message(message):
   
 @socketio.on('disconnect')
 def on_disconnect():
+ global names
  print "USER DISCONNECTED"
  #find user who disconnected
  for key in names:
@@ -126,7 +125,7 @@ def on_disconnect():
     socketio.emit("user:left",key)
     #add bot message that someone left
     userLeft=models.ChatMessage('APPLICATION BOT','http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217',key['name'] +'Left')
-    models.db.session.add(userLet)
+    models.db.session.add(userLeft)
     models.db.session.commit()
    # messages.append({'user': 'APPLICATION BOT','text' : key['name'] +' Left','src':'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'})
     names.remove(key)
