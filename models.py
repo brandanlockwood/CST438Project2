@@ -1,4 +1,5 @@
 # models.py
+import os 
 import flask_sqlalchemy, app
 # app.app = app module's app variable
 #TODO ADD Database grab info set to message array in init send messages list down and will be done with SE PROJECT!!!!!
