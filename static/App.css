@@ -11,10 +11,7 @@ body{
  height:50;
 }
 
-#user
-{
-    background-color:blue;
-}
+
 #facebookLogin{
     background-color:green;
 }
@@ -25,7 +22,7 @@ body{
 }
 #background
 {
-  filter: blur(1px)grayscale(100%);
+  filter: blur(3px);
    position:absolute;
    width:100%;
    height:100%;
@@ -41,7 +38,7 @@ body{
   font-weight: bold;
   left:25%;
 
-  background-color:rgba(0,0,0,0.7);
+  background-color:rgba(0,0,0,0.75);
  font-family: 'Wallpoet', sans-serif;
 color:rgb(192,192,192);
   width:60%;
@@ -49,9 +46,28 @@ color:rgb(192,192,192);
   
   
 }
+#hello
+{
+     top:60%;
+     left:60%;
+    position: absolute;
+    background-color:rgba(0,0,0,1);
+    width:16%;
+    height:11%;
+    z-index: -1;
+    filter: blur(10px);
+}
+#blur 
+{
+   
+    position:absolute;
+    height:100px;
+    width:100px;
+    color:black;
+}
 #message {
 
-width:500px;
+background-color:rgba(255, 51,0,0.4);
 }
 #onlineUsers
 {
@@ -64,7 +80,7 @@ width:500px;
   font-family: 'Wallpoet', sans-serif;
 color:rgb(192,192,192);
      position: absolute;
-  background-color:rgba(0,0,0,0.7);
+  background-color:rgba(0,0,0,0.75);
   
 }
 #users
@@ -77,7 +93,7 @@ color:rgb(192,192,192);
   position: absolute;
   font-size: 30px;
  font-family: 'Wallpoet', sans-serif;
-  background-color:rgba(0,0,0,0.7);
+  background-color:rgba(0,0,0,0.75);
 color:rgb(192,192,192);
 }
 #googleButton{
@@ -93,22 +109,23 @@ color:rgb(192,192,192);
    font-size: 50px;
 font-family: 'Wallpoet', sans-serif;
    position: absolute;
-   background-color:rgba(0,0,0,0.7);
+   background-color:rgba(0,0,0,0.75);
 color:rgb(192,192,192);
 }
 #messageList{
+  
     padding-top:15px;
     border-radius: 10px;
     text-align:center;
   height:70%;
   width:60%;
   position: absolute;
-  font-size: 40px;
-  
+  font-size: 35px;
 font-family: 'Wallpoet', sans-serif;
 color:rgb(192,192,192);
   top:20%;
   left:25%;
   background-color:rgba(0,0,0,0.7);
   overflow-y: auto;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }

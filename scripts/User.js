@@ -5,7 +5,7 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 
 
-
+var ReactDOM = require('react-dom');
 
 var socket = SocketIO.connect();
 
@@ -16,7 +16,7 @@ var socket = SocketIO.connect();
 //User class with user name and image
  class User extends React.Component {
  render() {
- return <div>{this.props.name} <img id="userImage" src={this.props.src}/></div>;
+ return <div id="user">{this.props.name} <img id="userImage" src={this.props.src}/></div>;
  }
  }
  class UserList extends React.Component {
@@ -34,9 +34,18 @@ var socket = SocketIO.connect();
 }
 //Message List 
 var MessageList = React.createClass({
+  componentDidMount() {
+    var node = ReactDOM.findDOMNode(this);
+        node.scrollTop = node.scrollHeight;
+  },
+ componentDidUpdate: function(){
+        var node = ReactDOM.findDOMNode(this);
+        node.scrollTop = node.scrollHeight;
+    },
+
   render() {
       return (
-          <div className='messages'id="messageList">
+          <div className='messages'id="messageList" >
               {
                   this.props.messages.map((message, i) => {
                   console.log(message);
@@ -57,9 +66,10 @@ var MessageList = React.createClass({
 });
 //Message Component includes picture,user name,text
 var Message = React.createClass({
+ 
   render() {
       return (
-          <div className="message">
+          <div className="message" id="message">
              <img id="userImage" src={this.props.src} />
               <strong>{this.props.user} :</strong> 
               <span>{this.props.text}</span>        
@@ -72,14 +82,17 @@ var MessageForm = React.createClass({
   getInitialState() {
       return {text: ''};
   },
+  
 
   handleSubmit(e) {
       e.preventDefault();
+      
       var message = {
           user : this.props.user,
           text : this.state.text,
           src  : this.props.src
       }
+      
       this.props.onMessageSubmit(message); 
       this.setState({ text: '' });
   },
@@ -113,6 +126,7 @@ var ChatApp = React.createClass({
       return {users: [], messages:[], text: '',failureGoogle:[],successGoogle:[],numberOfUsers:0,show:false};
   },
 
+  
   componentDidMount() {
      
      
@@ -127,15 +141,12 @@ var ChatApp = React.createClass({
       });
   },
 
+
   _login(data)
   {
        
     console.log(data);
      this.state.successGoogle = (response) => {
-       
-      //console.log(response);
-      //console.log(response["profileObj"].imageUrl);
-      //console.log(response["profileObj"].name);
       socket.emit("login",{'name':response["profileObj"].name,'url':response["profileObj"].imageUrl});
       this.state.show=true;
        
@@ -160,6 +171,7 @@ var ChatApp = React.createClass({
   _initialize(data) {
       var {users, name,src,messages} = data;
       this.state.messages=messages;
+      console.log(data)
       console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
       if(src!='')
       {
