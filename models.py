@@ -1,10 +1,10 @@
 # models.py
-import os 
+ 
 import flask_sqlalchemy, app
 # app.app = app module's app variable
 #TODO ADD Database grab info set to message array in init send messages list down and will be done with SE PROJECT!!!!!
 #TODO REPLACE ALL ADD messges with DB adds :) add extra stuff more commands 
-app.app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.app.config['SQLALCHEMY_DATABASE_URI'] = app.os.getenv('DATABASE_URL')
 db = flask_sqlalchemy.SQLAlchemy(app.app)
 #db.create_all()
 class ChatMessage(db.Model):
