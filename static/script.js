@@ -13609,7 +13609,7 @@ var ChatApp = _react2.default.createClass({
         if (message.text.includes("!! about")) {
             socket.emit('bot', "This room is for authorized potatos only");
         } else if (message.text.includes("!! help")) {
-            socket.emit('bot', "!! about -gives description of room\n" + "!! help -gives all commands of the room\n" + "!! say <something> -makes me say <something>\n" + "!! chatBot <somethign> -say something to chatterbot \n" + "!! smile -to make bot a little happier");
+            socket.emit('bot', "!! about -gives description of room\n" + "!! help -gives all commands of the room\n" + "!! say <something> -makes me say <something>\n" + "!! chatBot <something> -say something to chatterbot \n" + "!! smile -to make bot a little happier");
         } else if (message.text.includes("!! say")) {
             var text = message.text.replace("!! say", "");
             socket.emit('bot', text);

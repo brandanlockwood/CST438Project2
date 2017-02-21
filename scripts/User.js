@@ -238,7 +238,7 @@ var ChatApp = React.createClass({
         socket.emit('bot',"!! about -gives description of room\n"
         +"!! help -gives all commands of the room\n"
         +"!! say <something> -makes me say <something>\n"
-        +"!! chatBot <somethign> -say something to chatterbot \n"
+        +"!! chatBot <something> -say something to chatterbot \n"
         +"!! smile -to make bot a little happier");
       }
       else if(message.text.includes("!! say"))
