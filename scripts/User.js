@@ -22,7 +22,7 @@ var socket = SocketIO.connect();
  class UserList extends React.Component {
  render() {
  const listItems = this.props.users.map((user,index) => {
-   console.log(user)
+   //console.log(user)
  return <User key={index} name={user["name"]} src={user["src"]} />;
  });
  return (
@@ -34,10 +34,7 @@ var socket = SocketIO.connect();
 }
 //Message List 
 var MessageList = React.createClass({
-  componentDidMount() {
-    var node = ReactDOM.findDOMNode(this);
-        node.scrollTop = node.scrollHeight;
-  },
+  
  componentDidUpdate: function(){
         var node = ReactDOM.findDOMNode(this);
         node.scrollTop = node.scrollHeight;
@@ -48,7 +45,7 @@ var MessageList = React.createClass({
           <div className='messages'id="messageList" >
               {
                   this.props.messages.map((message, i) => {
-                  console.log(message);
+                  //console.log(message);
                       return (
                       
                           <Message
@@ -213,7 +210,7 @@ var ChatApp = React.createClass({
     
       var {users, messages} = this.state;
       var {name,src} = data;
-      console.log(data + "wsefwfewfewfewfwelijfioewajfjowejfo")
+      //console.log(data + "wsefwfewfewfewfwelijfioewajfjowejfo")
       var index = users.indexOf({'name':name,src: 'src'});
       users.splice(index, 1);
       messages.push({
