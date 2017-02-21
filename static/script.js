@@ -13395,7 +13395,7 @@ var UserList = function (_React$Component2) {
         key: 'render',
         value: function render() {
             var listItems = this.props.users.map(function (user, index) {
-                console.log(user);
+                //console.log(user)
                 return _react2.default.createElement(User, { key: index, name: user["name"], src: user["src"] });
             });
             return _react2.default.createElement(
@@ -13417,10 +13417,7 @@ var UserList = function (_React$Component2) {
 
 var MessageList = _react2.default.createClass({
     displayName: 'MessageList',
-    componentDidMount: function componentDidMount() {
-        var node = ReactDOM.findDOMNode(this);
-        node.scrollTop = node.scrollHeight;
-    },
+
 
     componentDidUpdate: function componentDidUpdate() {
         var node = ReactDOM.findDOMNode(this);
@@ -13432,7 +13429,7 @@ var MessageList = _react2.default.createClass({
             'div',
             { className: 'messages', id: 'messageList' },
             this.props.messages.map(function (message, i) {
-                console.log(message);
+                //console.log(message);
                 return _react2.default.createElement(Message, {
                     key: i,
                     user: message.user,
@@ -13590,8 +13587,8 @@ var ChatApp = _react2.default.createClass({
             messages = _state2.messages;
         var name = data.name,
             src = data.src;
+        //console.log(data + "wsefwfewfewfewfwelijfioewajfjowejfo")
 
-        console.log(data + "wsefwfewfewfewfwelijfioewajfjowejfo");
         var index = users.indexOf({ 'name': name, src: 'src' });
         users.splice(index, 1);
         messages.push({
