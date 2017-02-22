@@ -5,7 +5,7 @@
 
 2. **How did you incorporate your theme within your project?**
 
- - Throught the text font and color.
+ - Through the text font and color.
 
 3. **What are known problems, if any, with your project?**
 
