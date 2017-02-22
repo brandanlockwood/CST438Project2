@@ -13418,7 +13418,10 @@ var UserList = function (_React$Component2) {
 var MessageList = _react2.default.createClass({
     displayName: 'MessageList',
 
-
+    componentWillUpdate: function componentWillUpdate() {
+        var node = ReactDOM.findDOMNode(this);
+        this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
+    },
     componentDidUpdate: function componentDidUpdate() {
         var node = ReactDOM.findDOMNode(this);
         node.scrollTop = node.scrollHeight;
@@ -13456,7 +13459,7 @@ var Message = _react2.default.createClass({
             ),
             _react2.default.createElement(
                 'span',
-                null,
+                { id: 'userText' },
                 this.props.text
             )
         );
@@ -13560,7 +13563,7 @@ var ChatApp = _react2.default.createClass({
 
         messages.push({ user: 'APPLICATION BOT',
             text: message,
-            src: 'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217' });
+            src: 'http://i.imgur.com/94pZ4.gif' });
         this.setState({ messages: messages });
     },
     _userJoined: function _userJoined(data) {
@@ -13568,15 +13571,18 @@ var ChatApp = _react2.default.createClass({
             users = _state.users,
             messages = _state.messages;
         var name = data.name,
-            src = data.src;
+            src = data.src,
+            show = data.show;
 
         //console.log(data)
 
-        users.push({ 'name': name, 'src': src });
+        if (show) {
+            users.push({ 'name': name, 'src': src });
+        }
         messages.push({
             user: 'APPLICATION BOT',
             text: name + ' Joined',
-            src: 'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'
+            src: 'http://i.imgur.com/94pZ4.gif'
         });
         this.state.numberOfUsers = users.length - 1;
         this.setState({ users: users, messages: messages }, this.numberOfUsers);
@@ -13609,7 +13615,7 @@ var ChatApp = _react2.default.createClass({
         if (message.text.includes("!! about")) {
             socket.emit('bot', "This room is for authorized potatos only");
         } else if (message.text.includes("!! help")) {
-            socket.emit('bot', "!! about -gives description of room\n" + "!! help -gives all commands of the room\n" + "!! say <something> -makes me say <something>\n" + "!! chatBot <something> -say something to chatterbot \n" + "!! smile -to make bot a little happier");
+            socket.emit('bot', "!! about -gives description of room " + "!! help -gives all commands of the room " + "!! say <something> -makes me say <something> " + "!! chatBot <something> -say something to chatterbot " + "!! smile -to make bot a little happier");
         } else if (message.text.includes("!! say")) {
             var text = message.text.replace("!! say", "");
             socket.emit('bot', text);

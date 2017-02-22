@@ -17,7 +17,7 @@ chatbot = ChatBot(
 # Train based on the english corpus
 chatbot.train("chatterbot.corpus.english")
 
-names=[{"name":"APPLICATION BOT","src":"http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217","id":0}]
+names=[{"name":"APPLICATION BOT","src":"http://i.imgur.com/94pZ4.gif","id":0}]
 messages=[]
 
 
@@ -47,9 +47,10 @@ def login(data):
  #emit to new client current data
  emit('init',{'users':names,'name':data['name'],'src':data['url'],'messages':messageList},namespace='/')
  #emit to all clients a new client has joined
- socketio.emit('user:join', {'name': data['name'],'src':data['url']},broadcast=True,include_self=False)
+ socketio.emit('user:join', {'name': data['name'],'src':data['url'],'show':True},broadcast=True,include_self=False)
+ emit('user:join', {'name': data['name'],'src':data['url'],'show':False})
  #add applications bot join message
- userAdd=models.ChatMessage('APPLICATION BOT','http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217',data['name'] +' Joined')
+ userAdd=models.ChatMessage('APPLICATION BOT','http://i.imgur.com/94pZ4.gif',data['name'] +' Joined')
  models.db.session.add(userAdd)
  models.db.session.commit()
  #messageList.append({'user': 'APPLICATION BOT','text' : data['name'] +' Joined','src':'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'})
@@ -72,9 +73,10 @@ def facebookLogin(data):
   #send list based on database and user joining
   emit('init',{'users':names,'name':json['name'],'src':json['picture']['data']['url'],'messages':messageList},namespace='/')
   #emit to everybody someone has joined
-  socketio.emit('user:join', {'name': json['name'],'src':json['picture']['data']['url']},broadcast=True,include_self=False)
+  socketio.emit('user:join', {'name': json['name'],'src':json['picture']['data']['url'],'show':True},broadcast=True,include_self=False)
+  emit('user:join', {'name': json['name'],'src':json['picture']['data']['url'],'show':False})
   #add application bot message
-  userAdd=models.ChatMessage('APPLICATION BOT','http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217',json['name'] +' Joined')
+  userAdd=models.ChatMessage('APPLICATION BOT','http://i.imgur.com/94pZ4.gif',json['name'] +' Joined')
   models.db.session.add(userAdd)
   models.db.session.commit()
   #messages.append({'user': 'APPLICATION BOT','text' : json['name'] +' Joined','src':'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'})
@@ -100,7 +102,7 @@ def bot_message(message):
   print repr(newMessage)
   #messages.append(newMessage)
   #add message to db
-  botMessage=models.ChatMessage('APPLICATION BOT','http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217',newMessage)
+  botMessage=models.ChatMessage('APPLICATION BOT','http://i.imgur.com/94pZ4.gif',newMessage)
   models.db.session.add(botMessage)
   models.db.session.commit()
   #push bot message to all clients
@@ -108,7 +110,7 @@ def bot_message(message):
  else:
   #messages.append(message)
   #add bot message to db
-  botMessage=models.ChatMessage('APPLICATION BOT','http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217',message)
+  botMessage=models.ChatMessage('APPLICATION BOT','http://i.imgur.com/94pZ4.gif',message)
   models.db.session.add(botMessage)
   models.db.session.commit()
   #push bot message to all clients
@@ -124,7 +126,7 @@ def on_disconnect():
     #emit to all clients who left
     socketio.emit("user:left",key)
     #add bot message that someone left
-    userLeft=models.ChatMessage('APPLICATION BOT','http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217',key['name'] +'Left')
+    userLeft=models.ChatMessage('APPLICATION BOT','http://i.imgur.com/94pZ4.gif',key['name'] +'Left')
     models.db.session.add(userLeft)
     models.db.session.commit()
    # messages.append({'user': 'APPLICATION BOT','text' : key['name'] +' Left','src':'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'})

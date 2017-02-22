@@ -34,7 +34,10 @@ var socket = SocketIO.connect();
 }
 //Message List 
 var MessageList = React.createClass({
-  
+  componentWillUpdate: function() {
+  var node = ReactDOM.findDOMNode(this);
+  this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
+},
  componentDidUpdate: function(){
         var node = ReactDOM.findDOMNode(this);
         node.scrollTop = node.scrollHeight;
@@ -69,7 +72,7 @@ var Message = React.createClass({
           <div className="message" id="message">
              <img id="userImage" src={this.props.src} />
               <strong>{this.props.user} :</strong> 
-              <span>{this.props.text}</span>        
+              <span id="userText">{this.props.text}</span>        
           </div>
       );
   }
@@ -187,20 +190,23 @@ var ChatApp = React.createClass({
     var {messages} = this.state
      messages.push({ user: 'APPLICATION BOT',
           text : message,
-          src :'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'});
+          src :'http://i.imgur.com/94pZ4.gif'});
       this.setState({messages});
   },
 
   _userJoined(data) {
       var {users, messages} = this.state;
-      var {name,src} = data;
+      var {name,src,show} = data;
       
       //console.log(data)
+      if(show)
+      {
       users.push({'name':name,'src':src});
+      }
       messages.push({
           user: 'APPLICATION BOT',
           text : name +' Joined',
-          src :'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'
+          src :'http://i.imgur.com/94pZ4.gif'
       });
        this.state.numberOfUsers=users.length-1;
       this.setState({users, messages},this.numberOfUsers);
@@ -235,10 +241,10 @@ var ChatApp = React.createClass({
         socket.emit('bot',"This room is for authorized potatos only");
       }else if(message.text.includes("!! help"))
       {
-        socket.emit('bot',"!! about -gives description of room\n"
-        +"!! help -gives all commands of the room\n"
-        +"!! say <something> -makes me say <something>\n"
-        +"!! chatBot <something> -say something to chatterbot \n"
+        socket.emit('bot',"!! about -gives description of room "
+        +"!! help -gives all commands of the room "
+        +"!! say <something> -makes me say <something> "
+        +"!! chatBot <something> -say something to chatterbot "
         +"!! smile -to make bot a little happier");
       }
       else if(message.text.includes("!! say"))
