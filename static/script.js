@@ -13608,6 +13608,8 @@ var ChatApp = _react2.default.createClass({
     handleMessageSubmit: function handleMessageSubmit(message) {
         var messages = this.state.messages;
 
+        var audio = document.getElementById("audio");
+        audio.play();
         messages.push(message);
         this.setState({ messages: messages });
         //console.log(message.text)

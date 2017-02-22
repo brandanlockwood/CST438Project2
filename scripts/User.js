@@ -232,6 +232,8 @@ var ChatApp = React.createClass({
 
   handleMessageSubmit(message) {
       var {messages} = this.state;
+      var audio = document.getElementById("audio");
+      audio.play();
       messages.push(message);
       this.setState({messages});
       //console.log(message.text)
