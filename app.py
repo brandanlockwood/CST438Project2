@@ -72,7 +72,7 @@ def facebookLogin(data):
   #send list based on database and user joining
   emit('init',{'users':names,'name':json['name'],'src':json['picture']['data']['url'],'messages':messageList},namespace='/')
   #emit to everybody someone has joined
-  socketio.emit('user:join', {'name': json['name'],'src':json['picture']['data']['url']},broadcast=True)
+  socketio.emit('user:join', {'name': json['name'],'src':json['picture']['data']['url']},broadcast=True,include_self=False)
   #add application bot message
   userAdd=models.ChatMessage('APPLICATION BOT','http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217',json['name'] +' Joined')
   models.db.session.add(userAdd)

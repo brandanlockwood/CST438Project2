@@ -16,13 +16,20 @@ body{
     background-color:green;
 }
 #login{
+    border-radius: 10px;
+    color:blue;
+    text-align:center;
+    background-color:rgba(0,0,0,0.75);
     position: absolute;
+    width:20%;
+    height:30%;
     top:40%;
     left:40%;
 }
 #background
 {
-  filter: blur(3px);
+    
+  filter: blur(2px);
    position:absolute;
    width:100%;
    height:100%;

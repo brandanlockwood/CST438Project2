@@ -13542,7 +13542,7 @@ var ChatApp = _react2.default.createClass({
             messages = data.messages;
 
         this.state.messages = messages;
-        //console.log(data)
+        console.log(data);
         //console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
         if (src != '') {
             this.state.numberOfUsers = users.length - 1;
@@ -13670,7 +13670,7 @@ var ChatApp = _react2.default.createClass({
                 _react2.default.createElement(_reactFacebookLogin2.default, {
                     appId: '101547387036328',
                     autoLoad: true,
-                    buttonStyle: { fontSize: 40 },
+                    buttonStyle: { fontSize: 12 },
                     callback: this.state.responseFacebook
 
                 }),

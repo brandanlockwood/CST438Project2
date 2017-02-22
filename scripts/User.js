@@ -168,7 +168,7 @@ var ChatApp = React.createClass({
   _initialize(data) {
       var {users, name,src,messages} = data;
       this.state.messages=messages;
-      //console.log(data)
+      console.log(data)
       //console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
       if(src!='')
       {
@@ -295,7 +295,7 @@ var ChatApp = React.createClass({
              <FacebookLogin
           appId="101547387036328"
           autoLoad
-          buttonStyle={ { fontSize: 40 } }
+          buttonStyle={ { fontSize: 12 } }
           callback={this.state.responseFacebook}
          
         />
