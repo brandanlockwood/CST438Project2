@@ -9,7 +9,7 @@
 
 3. **What are known problems, if any, with your project?**
 
- - Current problem is that sometimes the facebook login button won't work. Which as short fix just refresh the webpage.
+ - Current problem sometimes the login buttons won't work. Which as short fix just refresh the webpage. It will show multiple logins due to the login being successful, but creating error.
 
 4. **How would you improve it if you had more time?**
 
