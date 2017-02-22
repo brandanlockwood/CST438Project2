@@ -222,7 +222,7 @@ var ChatApp = React.createClass({
       messages.push({
           user: 'APPLICATION BOT',
           text : name +' Left',
-          src :'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'
+          src :'http://i.imgur.com/94pZ4.gif'
       });
       this.state.numberOfUsers=users.length-1
       this.setState({users, messages},this.numberOfUsers);
