@@ -1,4 +1,4 @@
-## PROJECT 2
+## PROJECT 2 part 2
 1. **What is the theme you’ll be using for project 2?**
 
  - Techno
