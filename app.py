@@ -3,7 +3,7 @@ import os, flask, flask_socketio,requests
 from flask_socketio import emit,send
 from chatterbot import ChatBot
 import json
-#import getInfo
+import getInfo
 import urlparse
 
 app = flask.Flask(__name__)
@@ -97,7 +97,11 @@ def message_in(message):
      print "not an url"
     else:
      print "I got here"
-     message={"user":message["user"],"src":message["src"],"text":url,"url":url}
+     if getInfo.isImage(url):
+       message={"user":message["user"],"src":message["src"],"text":url,"img":url}
+     else:
+      message={"user":message["user"],"src":message["src"],"text":url,"url":url}
+    
     socketio.emit('send:message',message, broadcast=True,include_self=False)
 
 

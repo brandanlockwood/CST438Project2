@@ -58,6 +58,7 @@ var MessageList = React.createClass({
                               text={message.text}
                               src={message.src}
                               url={message.url}
+                              img={message.img}
                               
                           />
                       );
@@ -84,6 +85,11 @@ var Message = React.createClass({
               <a href={this.props.url}>link</a>
               </div>
               }
+               {this.props.img!=""&&this.props.img!=undefined &&
+              <div>
+              <img src={this.props.img}/>
+              </div>
+              }
              
           </div>
       );
@@ -103,7 +109,8 @@ var MessageForm = React.createClass({
           user : this.props.user,
           text : this.state.text,
           src  : this.props.src,
-          url  : ""
+          url  : "",
+          img  : ""
       }
       
       this.props.onMessageSubmit(message); 
@@ -248,8 +255,17 @@ var ChatApp = React.createClass({
       var audio = document.getElementById("audio");
       audio.play();
       if (validUrl.isUri(message.text)){
-        console.log('Looks like an URI');
-        message.url=message.text
+        console.log(message.text);
+        if(message.text.match(/\.(jpeg|jpg|gif|png)$/) != null)
+        {
+          console.log('image');
+          message.img=message.text
+        }
+        else{
+          console.log('not an image');
+          message.url=message.text
+        }
+        
       } else {
         console.log(message.text);
       }

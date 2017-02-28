@@ -13439,7 +13439,8 @@ var MessageList = _react2.default.createClass({
           user: message.user,
           text: message.text,
           src: message.src,
-          url: message.url
+          url: message.url,
+          img: message.img
 
         });
       })
@@ -13474,6 +13475,11 @@ var Message = _react2.default.createClass({
           { href: this.props.url },
           'link'
         )
+      ),
+      this.props.img != "" && this.props.img != undefined && _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('img', { src: this.props.img })
       )
     );
   }
@@ -13490,7 +13496,8 @@ var MessageForm = _react2.default.createClass({
       user: this.props.user,
       text: this.state.text,
       src: this.props.src,
-      url: ""
+      url: "",
+      img: ""
     };
 
     this.props.onMessageSubmit(message);
@@ -13625,8 +13632,14 @@ var ChatApp = _react2.default.createClass({
     var audio = document.getElementById("audio");
     audio.play();
     if (validUrl.isUri(message.text)) {
-      console.log('Looks like an URI');
-      message.url = message.text;
+      console.log(message.text);
+      if (message.text.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+        console.log('image');
+        message.img = message.text;
+      } else {
+        console.log('not an image');
+        message.url = message.text;
+      }
     } else {
       console.log(message.text);
     }
