@@ -29,7 +29,7 @@ var socket = SocketIO.connect();
                
               <div>Venue: {this.props.venue}</div>
               <div>Location: {this.props.loc}</div>
-              <a href={this.props.tickets} target="_blank">Ticket information</a>
+              <a href={this.props.tickets} target='_blank'>Ticket information</a>
               <div>Date: {this.props.date} Time: {this.props.time} </div>
               
               
@@ -100,7 +100,7 @@ var Message = React.createClass({
               {console.log(this.props.url)}
               {this.props.url!=""&&this.props.url!=undefined &&
               <div>
-              <a href={this.props.url} target="_blank">link</a>
+              <a href={this.props.url} target='_blank'>Link</a>
               </div>
               }
                {this.props.img!=""&&this.props.img!=undefined &&
