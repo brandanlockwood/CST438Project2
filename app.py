@@ -97,7 +97,7 @@ def message_in(message):
      print "not an url"
     else:
      print "I got here"
-     message={"user":message["user"],"src":message["src"],"text":"","url":url}
+     message={"user":message["user"],"src":message["src"],"text":url,"url":url}
     socketio.emit('send:message',message, broadcast=True,include_self=False)
 
 
