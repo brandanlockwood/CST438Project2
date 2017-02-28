@@ -13420,7 +13420,7 @@ var Event = function (_React$Component2) {
         ),
         _react2.default.createElement(
           'a',
-          { href: this.props.tickets },
+          { href: this.props.tickets, target: '_blank' },
           'Ticket information'
         ),
         _react2.default.createElement(
@@ -13529,8 +13529,8 @@ var Message = _react2.default.createClass({
         null,
         _react2.default.createElement(
           'a',
-          { href: this.props.url },
-          'link'
+          { href: this.props.url, target: '_blank' },
+          'Link'
         )
       ),
       this.props.img != "" && this.props.img != undefined && _react2.default.createElement(
