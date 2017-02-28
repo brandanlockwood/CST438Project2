@@ -12,7 +12,7 @@ def isImage(imgUrl):
     
 def getEvents():
     events=[]
-    local_events=requests.get("https://api.seatgeek.com/2/events?client_id="+os.getenv("client_id")+"&geoip=true&range=10mi&sort=datetime_local.asc&taxonomies.name=concert&page=1&per_page=3")
+    local_events=requests.get("https://api.seatgeek.com/2/events?client_id="+os.getenv("client_id")+"&postal_code=93933&range=10mi&sort=datetime_local.asc&taxonomies.name=concert&page=1&per_page=5")
     local_events=local_events.json()
     
     if len(local_events["events"]) == 0:
@@ -40,7 +40,7 @@ def getEvents():
             print "URL: "+i["url"]
             print "Venue: "+i["venue"]["name"]
             location =i["venue"]["city"]+","+i["venue"]["state"]+", "+i["venue"]["address"]
-            events.append({"time":time,"date":date,"imageURL":i["url"],"venue":i["venue"]["name"],"location":location,"title":i['title']})
+            events.append({"time":time,"date":date,"tickets":i["url"],"imageURL":i["performers"][0]["image"],"venue":i["venue"]["name"],"location":location,"title":i['title']})
         return events
             #print json.dumps(i["venue"],indent=2)
             #print json.dumps(i["performers"],indent=2)

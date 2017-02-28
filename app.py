@@ -119,11 +119,10 @@ def bot_message(message):
   models.db.session.add(botMessage)
   models.db.session.commit()
   #push bot message to all clients
-  socketio.emit('bot',newMessage,broadcast=True,include_self=True)
+  socketio.emit('bot',{"text":newMessage},broadcast=True,include_self=True)
  elif("!! find" in message and "!! help" not in message):
-  print getInfo.getEvents()
-  print "hello"
-  
+  items=getInfo.getEvents()
+  socketio.emit('bot',{"list":items,"text":"yes"},broadcast=True,include_self=True)
  else:
   #messages.append(message)
   #add bot message to db
@@ -131,7 +130,7 @@ def bot_message(message):
   models.db.session.add(botMessage)
   models.db.session.commit()
   #push bot message to all clients
-  socketio.emit('bot',message, broadcast=True,include_self=True)
+  socketio.emit('bot',{"text":message}, broadcast=True,include_self=True)
   
 @socketio.on('disconnect')
 def on_disconnect():

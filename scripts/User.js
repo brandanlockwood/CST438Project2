@@ -20,6 +20,23 @@ var socket = SocketIO.connect();
  return <div id="user">{this.props.name} <img id="userImage" src={this.props.src}/></div>;
  }
  }
+ class Event extends React.Component{
+   render() {
+ return <div>
+ 
+               <h1>{this.props.item}. {this.props.name}</h1>
+               <img src={this.props.imageURL}/>
+               
+              <div>Venue: {this.props.venue}</div>
+              <div>Location: {this.props.loc}</div>
+              <a href={this.props.tickets}>Ticket information</a>
+              <div>Date: {this.props.date} Time: {this.props.time} </div>
+              
+              
+              
+        </div>;
+ }
+ }
  class UserList extends React.Component {
  render() {
  const listItems = this.props.users.map((user,index) => {
@@ -59,6 +76,7 @@ var MessageList = React.createClass({
                               src={message.src}
                               url={message.url}
                               img={message.img}
+                              list={message.list}
                               
                           />
                       );
@@ -70,7 +88,7 @@ var MessageList = React.createClass({
 });
 //Message Component includes picture,user name,text
 var Message = React.createClass({
- 
+
   render() {
       return (
           <div className="message" id="message">
@@ -90,6 +108,26 @@ var Message = React.createClass({
               <img src={this.props.img}/>
               </div>
               }
+              {this.props.list!=undefined&&
+                this.props.list.map((item, i) => {
+                  //console.log(message);
+                return (
+                          <Event
+                              key={i}
+                              item={i+1}
+                              date={item["date"]}      
+                              imageURL={item["imageURL"]}
+                              time={item["time"]}
+                              name={item['title']}
+                              venue={item["venue"]}
+                              tickets={item["tickets"]}
+                              loc={item["location"]}
+                          />
+                         
+                   );
+                  })
+              }
+              
              
           </div>
       );
@@ -110,7 +148,8 @@ var MessageForm = React.createClass({
           text : this.state.text,
           src  : this.props.src,
           url  : "",
-          img  : ""
+          img  : "",
+          list : undefined
       }
       
       this.props.onMessageSubmit(message); 
@@ -173,7 +212,6 @@ var ChatApp = React.createClass({
      }
        this.state.failureGoogle= (response) => {
           
-          console.error(response)
           }
           
           
@@ -208,11 +246,25 @@ var ChatApp = React.createClass({
   _botMessage(message)
   {
     var {messages} = this.state
+     var {text,list}=message
+     console.log(list)
+     if (list!=undefined)
+     {
      messages.push({ user: 'APPLICATION BOT',
-          text : message,
-          src :'http://i.imgur.com/94pZ4.gif'});
+          text : text,
+          src :'http://i.imgur.com/94pZ4.gif',
+          list :list
+     });
+     }
+     else{
+       messages.push({ user: 'APPLICATION BOT',
+          text : text,
+          src :'http://i.imgur.com/94pZ4.gif'
+     });
+     }
       this.setState({messages});
   },
+  
 
   _userJoined(data) {
       var {users, messages} = this.state;

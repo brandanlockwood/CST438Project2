@@ -13383,8 +13383,64 @@ var User = function (_React$Component) {
   return User;
 }(_react2.default.Component);
 
-var UserList = function (_React$Component2) {
-  _inherits(UserList, _React$Component2);
+var Event = function (_React$Component2) {
+  _inherits(Event, _React$Component2);
+
+  function Event() {
+    _classCallCheck(this, Event);
+
+    return _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).apply(this, arguments));
+  }
+
+  _createClass(Event, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          this.props.item,
+          '. ',
+          this.props.name
+        ),
+        _react2.default.createElement('img', { src: this.props.imageURL }),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Venue: ',
+          this.props.venue
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Location: ',
+          this.props.loc
+        ),
+        _react2.default.createElement(
+          'a',
+          { href: this.props.tickets },
+          'Ticket information'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Date: ',
+          this.props.date,
+          ' Time: ',
+          this.props.time,
+          ' '
+        )
+      );
+    }
+  }]);
+
+  return Event;
+}(_react2.default.Component);
+
+var UserList = function (_React$Component3) {
+  _inherits(UserList, _React$Component3);
 
   function UserList() {
     _classCallCheck(this, UserList);
@@ -13440,7 +13496,8 @@ var MessageList = _react2.default.createClass({
           text: message.text,
           src: message.src,
           url: message.url,
-          img: message.img
+          img: message.img,
+          list: message.list
 
         });
       })
@@ -13480,7 +13537,21 @@ var Message = _react2.default.createClass({
         'div',
         null,
         _react2.default.createElement('img', { src: this.props.img })
-      )
+      ),
+      this.props.list != undefined && this.props.list.map(function (item, i) {
+        //console.log(message);
+        return _react2.default.createElement(Event, {
+          key: i,
+          item: i + 1,
+          date: item["date"],
+          imageURL: item["imageURL"],
+          time: item["time"],
+          name: item['title'],
+          venue: item["venue"],
+          tickets: item["tickets"],
+          loc: item["location"]
+        });
+      })
     );
   }
 });
@@ -13497,7 +13568,8 @@ var MessageForm = _react2.default.createClass({
       text: this.state.text,
       src: this.props.src,
       url: "",
-      img: ""
+      img: "",
+      list: undefined
     };
 
     this.props.onMessageSubmit(message);
@@ -13540,22 +13612,19 @@ var ChatApp = _react2.default.createClass({
     socket.on('disconnect', function () {});
   },
   _login: function _login(data) {
-    var _this3 = this;
+    var _this4 = this;
 
     //console.log(data);
     this.state.successGoogle = function (response) {
       socket.emit("login", { 'name': response["profileObj"].name, 'url': response["profileObj"].imageUrl });
-      _this3.state.show = true;
+      _this4.state.show = true;
     };
-    this.state.failureGoogle = function (response) {
-
-      console.error(response);
-    };
+    this.state.failureGoogle = function (response) {};
 
     this.state.responseFacebook = function (response) {
       if (response["accessToken"] != undefined) {
         socket.emit("facebookLogin", response["accessToken"]);
-        _this3.state.show = true;
+        _this4.state.show = true;
       }
     };
   },
@@ -13581,10 +13650,22 @@ var ChatApp = _react2.default.createClass({
   },
   _botMessage: function _botMessage(message) {
     var messages = this.state.messages;
+    var text = message.text,
+        list = message.list;
 
-    messages.push({ user: 'APPLICATION BOT',
-      text: message,
-      src: 'http://i.imgur.com/94pZ4.gif' });
+    console.log(list);
+    if (list != undefined) {
+      messages.push({ user: 'APPLICATION BOT',
+        text: text,
+        src: 'http://i.imgur.com/94pZ4.gif',
+        list: list
+      });
+    } else {
+      messages.push({ user: 'APPLICATION BOT',
+        text: text,
+        src: 'http://i.imgur.com/94pZ4.gif'
+      });
+    }
     this.setState({ messages: messages });
   },
   _userJoined: function _userJoined(data) {
@@ -13742,12 +13823,12 @@ var GiveMeACat = function (_Component) {
   function GiveMeACat(props) {
     _classCallCheck(this, GiveMeACat);
 
-    var _this4 = _possibleConstructorReturn(this, (GiveMeACat.__proto__ || Object.getPrototypeOf(GiveMeACat)).call(this, props));
+    var _this5 = _possibleConstructorReturn(this, (GiveMeACat.__proto__ || Object.getPrototypeOf(GiveMeACat)).call(this, props));
 
-    _this4.state = {
+    _this5.state = {
       fetchedData: _react2.default.PropTypes.string
     };
-    return _this4;
+    return _this5;
   }
 
   _createClass(GiveMeACat, [{
@@ -13773,8 +13854,8 @@ var GiveMeACat = function (_Component) {
   return GiveMeACat;
 }(_react.Component);
 
-var Chat = exports.Chat = function (_React$Component3) {
-  _inherits(Chat, _React$Component3);
+var Chat = exports.Chat = function (_React$Component4) {
+  _inherits(Chat, _React$Component4);
 
   function Chat() {
     _classCallCheck(this, Chat);
