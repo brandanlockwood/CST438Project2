@@ -3,7 +3,7 @@ import os, flask, flask_socketio,requests
 from flask_socketio import emit,send
 from chatterbot import ChatBot
 import json
-import getInfo
+#import getInfo
 import urlparse
 
 app = flask.Flask(__name__)
