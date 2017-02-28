@@ -7,6 +7,7 @@ import FacebookLogin from 'react-facebook-login';
 
 var ReactDOM = require('react-dom');
 
+var validUrl = require('valid-url');
 var socket = SocketIO.connect();
 
   socket.on('connect',function() {
@@ -56,6 +57,8 @@ var MessageList = React.createClass({
                               user={message.user}
                               text={message.text}
                               src={message.src}
+                              url={message.url}
+                              
                           />
                       );
                   })
@@ -72,7 +75,16 @@ var Message = React.createClass({
           <div className="message" id="message">
              <img id="userImage" src={this.props.src} />
               <strong>{this.props.user} :</strong> 
-              <span id="userText">{this.props.text}</span>        
+              {this.props.text!="" &&this.props.text!=undefined&&
+              <span id="userText">{this.props.text}</span>
+              }
+              {console.log(this.props.url)}
+              {this.props.url!=""&&this.props.url!=undefined &&
+              <div>
+              <a href={this.props.url}>link</a>
+              </div>
+              }
+             
           </div>
       );
   }
@@ -90,7 +102,8 @@ var MessageForm = React.createClass({
       var message = {
           user : this.props.user,
           text : this.state.text,
-          src  : this.props.src
+          src  : this.props.src,
+          url  : ""
       }
       
       this.props.onMessageSubmit(message); 
@@ -234,6 +247,13 @@ var ChatApp = React.createClass({
       var {messages} = this.state;
       var audio = document.getElementById("audio");
       audio.play();
+      if (validUrl.isUri(message.text)){
+        console.log('Looks like an URI');
+        message.url=message.text
+      } else {
+        console.log(message.text);
+      }
+      
       messages.push(message);
       this.setState({messages});
       //console.log(message.text)
@@ -260,7 +280,12 @@ var ChatApp = React.createClass({
       }else if(message.text.includes("!! chatBot"))
       {
         socket.emit('bot',message.text);
-      }else if(message.text.includes("!!"))
+      }
+      else if(message.text.includes("!! find"))
+      {
+        socket.emit('bot',message.text)
+      }
+      else if(message.text.includes("!!"))
       {
         socket.emit('bot',"Sorry I didn't get that");
       }

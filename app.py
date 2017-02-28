@@ -3,6 +3,8 @@ import os, flask, flask_socketio,requests
 from flask_socketio import emit,send
 from chatterbot import ChatBot
 import json
+import getInfo
+import urlparse
 
 app = flask.Flask(__name__)
 
@@ -89,6 +91,13 @@ def message_in(message):
     newMessage=models.ChatMessage(message["user"],message["src"],message["text"])
     models.db.session.add(newMessage)
     models.db.session.commit()
+    url = str(message["text"])
+    parts = urlparse.urlsplit(url)
+    if not parts.scheme or not parts.netloc: 
+     print "not an url"
+    else:
+     print "I got here"
+     message={"user":message["user"],"src":message["src"],"text":"","url":url}
     socketio.emit('send:message',message, broadcast=True,include_self=False)
 
 
@@ -107,6 +116,10 @@ def bot_message(message):
   models.db.session.commit()
   #push bot message to all clients
   socketio.emit('bot',newMessage,broadcast=True,include_self=True)
+ elif("!! find" in message and "!! help" not in message):
+  print getInfo.getEvents()
+  print "hello"
+  
  else:
   #messages.append(message)
   #add bot message to db
