@@ -8,7 +8,6 @@
     "react-dom": "^15.4.2",
     "react-facebook-login": "^3.4.3",
     "react-google-login-component": "^0.5.2",
-    "react-soundplayer": "^0.3.6",
     "socket.io-client": "^1.7.2"
   },
   "devDependencies": {}

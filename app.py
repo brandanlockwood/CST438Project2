@@ -4,10 +4,10 @@ from flask_socketio import emit,send
 from chatterbot import ChatBot
 import json
 import getInfo
-import urlparse
+
 
 app = flask.Flask(__name__)
-
+#os.environ["DATABASE_URL"]='postgresql://brandan:blockwood@localhost/postgres'
 import models
 
 socketio = flask_socketio.SocketIO(app)
@@ -30,10 +30,11 @@ def hello():
 
 @socketio.on('connect')
 def on_connect():
- print "%s USER CONNECTED " %  flask.request.sid
+ #print "%s USER CONNECTED " %  flask.request.sid
  #start chat 
  emit('login','Login stuff')
  emit('init',{'users':[],'name':'','src':''},namespace='/')
+ 
    
 @socketio.on('login')
 def login(data):
@@ -41,8 +42,8 @@ def login(data):
  messsages=[]
  messages=models.ChatMessage.query.all()
  for m in messages:
-  print m.name
-  print m
+  #print m.name
+  #print m
   messageList.append({'user':m.name,'src':m.src,'text':m.text})
  conv=messages.reverse()
  names.append({'name':data['name'],'src':data['url'],'id':flask.request.sid})
@@ -61,6 +62,7 @@ def login(data):
 def facebookLogin(data):
   messageList=[]
   messsages=[]
+  
   #Get all messages 
   messages=models.ChatMessage.query.all()
   for m in messages:
@@ -92,23 +94,25 @@ def message_in(message):
     models.db.session.add(newMessage)
     models.db.session.commit()
     url = str(message["text"])
-    parts = urlparse.urlsplit(url)
-    if not parts.scheme or not parts.netloc: 
+    if getInfo.isUrl(url):
      print "not an url"
     else:
-     print "I got here"
+     #print "I got here"
      if getInfo.isImage(url):
-       message={"user":message["user"],"src":message["src"],"text":url,"img":url}
+      message={"user":message["user"],"src":message["src"],"text":url,"img":url}
      else:
       message={"user":message["user"],"src":message["src"],"text":url,"url":url}
-    
+    print 'message sent'
     socketio.emit('send:message',message, broadcast=True,include_self=False)
 
 
 @socketio.on('bot')
 def bot_message(message):
+ #print message
+ message = getInfo.chatBotMessage(str(message["text"]))
+ #print message
  command="!! chatBot"
- print command in message
+ 
  if(command in message and "!! help" not in message):
   newMessage=message.replace(command,"")
   newMessage=str(chatbot.get_response(message))
@@ -147,6 +151,7 @@ def on_disconnect():
     models.db.session.commit()
    # messages.append({'user': 'APPLICATION BOT','text' : key['name'] +' Left','src':'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'})
     names.remove(key)
+
     
 if __name__ == '__main__':# __name__!
  socketio.run(

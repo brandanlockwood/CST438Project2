@@ -326,36 +326,9 @@ var ChatApp = React.createClass({
       this.setState({messages});
       //console.log(message.text)
       socket.emit('send:message', message);
-      if(message.text.includes("!! about"))
+      if (message.text.includes("!!"))
       {
-        socket.emit('bot',"This room is for authorized potatos only");
-      }else if(message.text.includes("!! help"))
-      {
-        socket.emit('bot',"!! about -gives description of room "
-        +"!! help -gives all commands of the room "
-        +"!! say <something> -makes me say <something> "
-        +"!! chatBot <something> -say something to chatterbot "
-        +"!! smile -to make bot a little happier");
-      }
-      else if(message.text.includes("!! say"))
-      {
-        var text = message.text.replace("!! say","");
-        socket.emit('bot',text);
-      }else if (message.text.includes("!! smile"))
-      {
-        socket.emit('bot',"=]");
-        
-      }else if(message.text.includes("!! chatBot"))
-      {
-        socket.emit('bot',message.text);
-      }
-      else if(message.text.includes("!! find"))
-      {
-        socket.emit('bot',message.text)
-      }
-      else if(message.text.includes("!!"))
-      {
-        socket.emit('bot',"Sorry I didn't get that");
+        socket.emit('bot',message)
       }
       
       

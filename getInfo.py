@@ -2,6 +2,32 @@ import re
 import calendar 
 import requests,json
 import os
+import urlparse
+def chatBotMessage(message):
+    commands =['!! about',"!! help","!! say","!! chatBot","!! smile","!! find","!!"]
+    if commands[0] in message:
+        return "This room is for authorized potatos only"
+    elif commands[1] in message:
+        return "!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make bot a little happier"
+    elif commands[2] in message:
+        print message[7:]
+        return message[7:]
+    elif commands[3] in message:
+        return message
+    elif commands[4] in message:
+        return "=]"
+    elif commands [5] in message:
+        return message
+    elif commands [6] in message[:2]:
+        return "Sorry I didn't get that"
+
+def isUrl(url):
+    parts = urlparse.urlsplit(url)
+    if not parts.scheme or not parts.netloc: 
+     return False
+    else:
+     return True
+
 def isImage(imgUrl):
     image=False
     endings=[".png", ".jpg", ".jpeg",".gif"]

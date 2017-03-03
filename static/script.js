@@ -13315,7 +13315,7 @@ var MyFavoriteAnimalList = exports.MyFavoriteAnimalList = function (_React$Compo
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.Chat = undefined;
 
@@ -13359,523 +13359,510 @@ socket.on('connect', function () {});
 //User class with user name and image
 
 var User = function (_React$Component) {
-  _inherits(User, _React$Component);
+    _inherits(User, _React$Component);
 
-  function User() {
-    _classCallCheck(this, User);
+    function User() {
+        _classCallCheck(this, User);
 
-    return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
-  }
-
-  _createClass(User, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { id: 'user' },
-        this.props.name,
-        ' ',
-        _react2.default.createElement('img', { id: 'userImage', src: this.props.src })
-      );
+        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
     }
-  }]);
 
-  return User;
+    _createClass(User, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { id: 'user' },
+                this.props.name,
+                ' ',
+                _react2.default.createElement('img', { id: 'userImage', src: this.props.src })
+            );
+        }
+    }]);
+
+    return User;
 }(_react2.default.Component);
 
 var Event = function (_React$Component2) {
-  _inherits(Event, _React$Component2);
+    _inherits(Event, _React$Component2);
 
-  function Event() {
-    _classCallCheck(this, Event);
+    function Event() {
+        _classCallCheck(this, Event);
 
-    return _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).apply(this, arguments));
-  }
-
-  _createClass(Event, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          this.props.item,
-          '. ',
-          this.props.name
-        ),
-        _react2.default.createElement('img', { src: this.props.imageURL }),
-        _react2.default.createElement(
-          'div',
-          null,
-          'Venue: ',
-          this.props.venue
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          'Location: ',
-          this.props.loc
-        ),
-        _react2.default.createElement(
-          'a',
-          { href: this.props.tickets, target: '_blank' },
-          'Ticket information'
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          'Date: ',
-          this.props.date,
-          ' Time: ',
-          this.props.time,
-          ' '
-        )
-      );
+        return _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).apply(this, arguments));
     }
-  }]);
 
-  return Event;
+    _createClass(Event, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    this.props.item,
+                    '. ',
+                    this.props.name
+                ),
+                _react2.default.createElement('img', { src: this.props.imageURL }),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    'Venue: ',
+                    this.props.venue
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    'Location: ',
+                    this.props.loc
+                ),
+                _react2.default.createElement(
+                    'a',
+                    { href: this.props.tickets, target: '_blank' },
+                    'Ticket information'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    'Date: ',
+                    this.props.date,
+                    ' Time: ',
+                    this.props.time,
+                    ' '
+                )
+            );
+        }
+    }]);
+
+    return Event;
 }(_react2.default.Component);
 
 var UserList = function (_React$Component3) {
-  _inherits(UserList, _React$Component3);
+    _inherits(UserList, _React$Component3);
 
-  function UserList() {
-    _classCallCheck(this, UserList);
+    function UserList() {
+        _classCallCheck(this, UserList);
 
-    return _possibleConstructorReturn(this, (UserList.__proto__ || Object.getPrototypeOf(UserList)).apply(this, arguments));
-  }
-
-  _createClass(UserList, [{
-    key: 'render',
-    value: function render() {
-      var listItems = this.props.users.map(function (user, index) {
-        //console.log(user)
-        return _react2.default.createElement(User, { key: index, name: user["name"], src: user["src"] });
-      });
-      return _react2.default.createElement(
-        'div',
-        { id: 'users' },
-        _react2.default.createElement(
-          'ul',
-          null,
-          listItems
-        )
-      );
+        return _possibleConstructorReturn(this, (UserList.__proto__ || Object.getPrototypeOf(UserList)).apply(this, arguments));
     }
-  }]);
 
-  return UserList;
+    _createClass(UserList, [{
+        key: 'render',
+        value: function render() {
+            var listItems = this.props.users.map(function (user, index) {
+                //console.log(user)
+                return _react2.default.createElement(User, { key: index, name: user["name"], src: user["src"] });
+            });
+            return _react2.default.createElement(
+                'div',
+                { id: 'users' },
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    listItems
+                )
+            );
+        }
+    }]);
+
+    return UserList;
 }(_react2.default.Component);
 //Message List 
 
 
 var MessageList = _react2.default.createClass({
-  displayName: 'MessageList',
+    displayName: 'MessageList',
 
-  componentWillUpdate: function componentWillUpdate() {
-    var node = ReactDOM.findDOMNode(this);
-    this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
-  },
-  componentDidUpdate: function componentDidUpdate() {
-    var node = ReactDOM.findDOMNode(this);
-    node.scrollTop = node.scrollHeight;
-  },
+    componentWillUpdate: function componentWillUpdate() {
+        var node = ReactDOM.findDOMNode(this);
+        this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
+    },
+    componentDidUpdate: function componentDidUpdate() {
+        var node = ReactDOM.findDOMNode(this);
+        node.scrollTop = node.scrollHeight;
+    },
 
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      { className: 'messages', id: 'messageList' },
-      this.props.messages.map(function (message, i) {
-        //console.log(message);
-        return _react2.default.createElement(Message, {
-          key: i,
-          user: message.user,
-          text: message.text,
-          src: message.src,
-          url: message.url,
-          img: message.img,
-          list: message.list
+    render: function render() {
+        return _react2.default.createElement(
+            'div',
+            { className: 'messages', id: 'messageList' },
+            this.props.messages.map(function (message, i) {
+                //console.log(message);
+                return _react2.default.createElement(Message, {
+                    key: i,
+                    user: message.user,
+                    text: message.text,
+                    src: message.src,
+                    url: message.url,
+                    img: message.img,
+                    list: message.list
 
-        });
-      })
-    );
-  }
+                });
+            })
+        );
+    }
 });
 //Message Component includes picture,user name,text
 var Message = _react2.default.createClass({
-  displayName: 'Message',
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      { className: 'message', id: 'message' },
-      _react2.default.createElement('img', { id: 'userImage', src: this.props.src }),
-      _react2.default.createElement(
-        'strong',
-        null,
-        this.props.user,
-        ' :'
-      ),
-      this.props.text != "" && this.props.text != undefined && _react2.default.createElement(
-        'span',
-        { id: 'userText' },
-        this.props.text
-      ),
-      console.log(this.props.url),
-      this.props.url != "" && this.props.url != undefined && _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'a',
-          { href: this.props.url, target: '_blank' },
-          'Link'
-        )
-      ),
-      this.props.img != "" && this.props.img != undefined && _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement('img', { src: this.props.img })
-      ),
-      this.props.list != undefined && this.props.list.map(function (item, i) {
-        //console.log(message);
-        return _react2.default.createElement(Event, {
-          key: i,
-          item: i + 1,
-          date: item["date"],
-          imageURL: item["imageURL"],
-          time: item["time"],
-          name: item['title'],
-          venue: item["venue"],
-          tickets: item["tickets"],
-          loc: item["location"]
-        });
-      })
-    );
-  }
+    displayName: 'Message',
+    render: function render() {
+        return _react2.default.createElement(
+            'div',
+            { className: 'message', id: 'message' },
+            _react2.default.createElement('img', { id: 'userImage', src: this.props.src }),
+            _react2.default.createElement(
+                'strong',
+                null,
+                this.props.user,
+                ' :'
+            ),
+            this.props.text != "" && this.props.text != undefined && _react2.default.createElement(
+                'span',
+                { id: 'userText' },
+                this.props.text
+            ),
+            console.log(this.props.url),
+            this.props.url != "" && this.props.url != undefined && _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'a',
+                    { href: this.props.url, target: '_blank' },
+                    'Link'
+                )
+            ),
+            this.props.img != "" && this.props.img != undefined && _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement('img', { src: this.props.img })
+            ),
+            this.props.list != undefined && this.props.list.map(function (item, i) {
+                //console.log(message);
+                return _react2.default.createElement(Event, {
+                    key: i,
+                    item: i + 1,
+                    date: item["date"],
+                    imageURL: item["imageURL"],
+                    time: item["time"],
+                    name: item['title'],
+                    venue: item["venue"],
+                    tickets: item["tickets"],
+                    loc: item["location"]
+                });
+            })
+        );
+    }
 });
 var MessageForm = _react2.default.createClass({
-  displayName: 'MessageForm',
-  getInitialState: function getInitialState() {
-    return { text: '' };
-  },
-  handleSubmit: function handleSubmit(e) {
-    e.preventDefault();
+    displayName: 'MessageForm',
+    getInitialState: function getInitialState() {
+        return { text: '' };
+    },
+    handleSubmit: function handleSubmit(e) {
+        e.preventDefault();
 
-    var message = {
-      user: this.props.user,
-      text: this.state.text,
-      src: this.props.src,
-      url: "",
-      img: "",
-      list: undefined
-    };
+        var message = {
+            user: this.props.user,
+            text: this.state.text,
+            src: this.props.src,
+            url: "",
+            img: "",
+            list: undefined
+        };
 
-    this.props.onMessageSubmit(message);
-    this.setState({ text: '' });
-  },
-  changeHandler: function changeHandler(e) {
-    this.setState({ text: e.target.value });
-  },
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      { className: 'message_form', id: 'chatBox' },
-      _react2.default.createElement(
-        'form',
-        { onSubmit: this.handleSubmit },
-        'CHAT:',
-        _react2.default.createElement('input', {
+        this.props.onMessageSubmit(message);
+        this.setState({ text: '' });
+    },
+    changeHandler: function changeHandler(e) {
+        this.setState({ text: e.target.value });
+    },
+    render: function render() {
+        return _react2.default.createElement(
+            'div',
+            { className: 'message_form', id: 'chatBox' },
+            _react2.default.createElement(
+                'form',
+                { onSubmit: this.handleSubmit },
+                'CHAT:',
+                _react2.default.createElement('input', {
 
-          onChange: this.changeHandler,
-          value: this.state.text
-        })
-      )
-    );
-  }
+                    onChange: this.changeHandler,
+                    value: this.state.text
+                })
+            )
+        );
+    }
 });
 
 var ChatApp = _react2.default.createClass({
-  displayName: 'ChatApp',
-  getInitialState: function getInitialState() {
-    return { users: [], messages: [], text: '', failureGoogle: [], successGoogle: [], numberOfUsers: 0, show: false };
-  },
-  componentDidMount: function componentDidMount() {
+    displayName: 'ChatApp',
+    getInitialState: function getInitialState() {
+        return { users: [], messages: [], text: '', failureGoogle: [], successGoogle: [], numberOfUsers: 0, show: false };
+    },
+    componentDidMount: function componentDidMount() {
 
-    socket.on('login', this._login);
-    socket.on('init', this._initialize);
-    socket.on('send:message', this._messageRecieve);
-    socket.on('user:join', this._userJoined);
-    socket.on('user:left', this._userLeft);
-    socket.on('bot', this._botMessage);
-    socket.on('disconnect', function () {});
-  },
-  _login: function _login(data) {
-    var _this4 = this;
+        socket.on('login', this._login);
+        socket.on('init', this._initialize);
+        socket.on('send:message', this._messageRecieve);
+        socket.on('user:join', this._userJoined);
+        socket.on('user:left', this._userLeft);
+        socket.on('bot', this._botMessage);
+        socket.on('disconnect', function () {});
+    },
+    _login: function _login(data) {
+        var _this4 = this;
 
-    //console.log(data);
-    this.state.successGoogle = function (response) {
-      socket.emit("login", { 'name': response["profileObj"].name, 'url': response["profileObj"].imageUrl });
-      _this4.state.show = true;
-    };
-    this.state.failureGoogle = function (response) {};
+        //console.log(data);
+        this.state.successGoogle = function (response) {
+            socket.emit("login", { 'name': response["profileObj"].name, 'url': response["profileObj"].imageUrl });
+            _this4.state.show = true;
+        };
+        this.state.failureGoogle = function (response) {};
 
-    this.state.responseFacebook = function (response) {
-      if (response["accessToken"] != undefined) {
-        socket.emit("facebookLogin", response["accessToken"]);
-        _this4.state.show = true;
-      }
-    };
-  },
-  _initialize: function _initialize(data) {
-    var users = data.users,
-        name = data.name,
-        src = data.src,
-        messages = data.messages;
+        this.state.responseFacebook = function (response) {
+            if (response["accessToken"] != undefined) {
+                socket.emit("facebookLogin", response["accessToken"]);
+                _this4.state.show = true;
+            }
+        };
+    },
+    _initialize: function _initialize(data) {
+        var users = data.users,
+            name = data.name,
+            src = data.src,
+            messages = data.messages;
 
-    this.state.messages = messages;
-    console.log(data);
-    //console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
-    if (src != '') {
-      this.state.numberOfUsers = users.length - 1;
-    }
-    this.setState({ users: users, user: name, src: src });
-  },
-  _messageRecieve: function _messageRecieve(message) {
-    var messages = this.state.messages;
+        this.state.messages = messages;
+        console.log(data);
+        //console.log(this.state.messages+'wefefwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
+        if (src != '') {
+            this.state.numberOfUsers = users.length - 1;
+        }
+        this.setState({ users: users, user: name, src: src });
+    },
+    _messageRecieve: function _messageRecieve(message) {
+        var messages = this.state.messages;
 
-    messages.push(message);
-    this.setState({ messages: messages });
-  },
-  _botMessage: function _botMessage(message) {
-    var messages = this.state.messages;
-    var text = message.text,
-        list = message.list;
+        messages.push(message);
+        this.setState({ messages: messages });
+    },
+    _botMessage: function _botMessage(message) {
+        var messages = this.state.messages;
+        var text = message.text,
+            list = message.list;
 
-    console.log(list);
-    if (list != undefined) {
-      messages.push({ user: 'APPLICATION BOT',
-        text: text,
-        src: 'http://i.imgur.com/94pZ4.gif',
-        list: list
-      });
-    } else {
-      messages.push({ user: 'APPLICATION BOT',
-        text: text,
-        src: 'http://i.imgur.com/94pZ4.gif'
-      });
-    }
-    this.setState({ messages: messages });
-  },
-  _userJoined: function _userJoined(data) {
-    var _state = this.state,
-        users = _state.users,
-        messages = _state.messages;
-    var name = data.name,
-        src = data.src,
-        show = data.show;
+        console.log(list);
+        if (list != undefined) {
+            messages.push({ user: 'APPLICATION BOT',
+                text: text,
+                src: 'http://i.imgur.com/94pZ4.gif',
+                list: list
+            });
+        } else {
+            messages.push({ user: 'APPLICATION BOT',
+                text: text,
+                src: 'http://i.imgur.com/94pZ4.gif'
+            });
+        }
+        this.setState({ messages: messages });
+    },
+    _userJoined: function _userJoined(data) {
+        var _state = this.state,
+            users = _state.users,
+            messages = _state.messages;
+        var name = data.name,
+            src = data.src,
+            show = data.show;
 
-    //console.log(data)
+        //console.log(data)
 
-    if (show) {
-      users.push({ 'name': name, 'src': src });
-    }
-    messages.push({
-      user: 'APPLICATION BOT',
-      text: name + ' Joined',
-      src: 'http://i.imgur.com/94pZ4.gif'
-    });
-    this.state.numberOfUsers = users.length - 1;
-    this.setState({ users: users, messages: messages }, this.numberOfUsers);
-  },
-  _userLeft: function _userLeft(data) {
-    var _state2 = this.state,
-        users = _state2.users,
-        messages = _state2.messages;
-    var name = data.name,
-        src = data.src;
-    //console.log(data + "wsefwfewfewfewfwelijfioewajfjowejfo")
+        if (show) {
+            users.push({ 'name': name, 'src': src });
+        }
+        messages.push({
+            user: 'APPLICATION BOT',
+            text: name + ' Joined',
+            src: 'http://i.imgur.com/94pZ4.gif'
+        });
+        this.state.numberOfUsers = users.length - 1;
+        this.setState({ users: users, messages: messages }, this.numberOfUsers);
+    },
+    _userLeft: function _userLeft(data) {
+        var _state2 = this.state,
+            users = _state2.users,
+            messages = _state2.messages;
+        var name = data.name,
+            src = data.src;
+        //console.log(data + "wsefwfewfewfewfwelijfioewajfjowejfo")
 
-    var index = users.indexOf({ 'name': name, src: 'src' });
-    users.splice(index, 1);
-    messages.push({
-      user: 'APPLICATION BOT',
-      text: name + ' Left',
-      src: 'http://i.imgur.com/94pZ4.gif'
-    });
-    this.state.numberOfUsers = users.length - 1;
-    this.setState({ users: users, messages: messages }, this.numberOfUsers);
-  },
-  handleMessageSubmit: function handleMessageSubmit(message) {
-    var messages = this.state.messages;
+        var index = users.indexOf({ 'name': name, src: 'src' });
+        users.splice(index, 1);
+        messages.push({
+            user: 'APPLICATION BOT',
+            text: name + ' Left',
+            src: 'http://i.imgur.com/94pZ4.gif'
+        });
+        this.state.numberOfUsers = users.length - 1;
+        this.setState({ users: users, messages: messages }, this.numberOfUsers);
+    },
+    handleMessageSubmit: function handleMessageSubmit(message) {
+        var messages = this.state.messages;
 
-    var audio = document.getElementById("audio");
-    audio.play();
-    if (validUrl.isUri(message.text)) {
-      console.log(message.text);
-      if (message.text.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-        console.log('image');
-        message.img = message.text;
-      } else {
-        console.log('not an image');
-        message.url = message.text;
-      }
-    } else {
-      console.log(message.text);
-    }
+        var audio = document.getElementById("audio");
+        audio.play();
+        if (validUrl.isUri(message.text)) {
+            console.log(message.text);
+            if (message.text.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+                console.log('image');
+                message.img = message.text;
+            } else {
+                console.log('not an image');
+                message.url = message.text;
+            }
+        } else {
+            console.log(message.text);
+        }
 
-    messages.push(message);
-    this.setState({ messages: messages });
-    //console.log(message.text)
-    socket.emit('send:message', message);
-    if (message.text.includes("!! about")) {
-      socket.emit('bot', "This room is for authorized potatos only");
-    } else if (message.text.includes("!! help")) {
-      socket.emit('bot', "!! about -gives description of room " + "!! help -gives all commands of the room " + "!! say <something> -makes me say <something> " + "!! chatBot <something> -say something to chatterbot " + "!! smile -to make bot a little happier");
-    } else if (message.text.includes("!! say")) {
-      var text = message.text.replace("!! say", "");
-      socket.emit('bot', text);
-    } else if (message.text.includes("!! smile")) {
-      socket.emit('bot', "=]");
-    } else if (message.text.includes("!! chatBot")) {
-      socket.emit('bot', message.text);
-    } else if (message.text.includes("!! find")) {
-      socket.emit('bot', message.text);
-    } else if (message.text.includes("!!")) {
-      socket.emit('bot', "Sorry I didn't get that");
-    }
-  },
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      null,
-      this.state.show ? _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { id: 'onlineUsers' },
-          _react2.default.createElement(
-            'h2',
+        messages.push(message);
+        this.setState({ messages: messages });
+        //console.log(message.text)
+        socket.emit('send:message', message);
+        if (message.text.includes("!!")) {
+            socket.emit('bot', message);
+        }
+    },
+    render: function render() {
+        return _react2.default.createElement(
+            'div',
             null,
-            'Online Users ',
-            this.state.numberOfUsers
-          )
-        ),
-        _react2.default.createElement(UserList, {
-          users: this.state.users
-        }),
-        _react2.default.createElement(
-          'div',
-          { id: 'messageHeader' },
-          '  ',
-          _react2.default.createElement(
-            'h2',
-            null,
-            ' Conversation: '
-          )
-        ),
-        _react2.default.createElement(MessageList, {
-          messages: this.state.messages
-        }),
-        _react2.default.createElement(MessageForm, {
-          onMessageSubmit: this.handleMessageSubmit,
-          user: this.state.user,
-          src: this.state.src
-        })
-      ) : _react2.default.createElement(
-        'div',
-        { id: 'Login' },
-        _react2.default.createElement(
-          'h2',
-          null,
-          'Login'
-        ),
-        _react2.default.createElement(_reactFacebookLogin2.default, {
-          appId: '101547387036328',
-          autoLoad: true,
-          buttonStyle: { fontSize: 12 },
-          callback: this.state.responseFacebook
+            this.state.show ? _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { id: 'onlineUsers' },
+                    _react2.default.createElement(
+                        'h2',
+                        null,
+                        'Online Users ',
+                        this.state.numberOfUsers
+                    )
+                ),
+                _react2.default.createElement(UserList, {
+                    users: this.state.users
+                }),
+                _react2.default.createElement(
+                    'div',
+                    { id: 'messageHeader' },
+                    '  ',
+                    _react2.default.createElement(
+                        'h2',
+                        null,
+                        ' Conversation: '
+                    )
+                ),
+                _react2.default.createElement(MessageList, {
+                    messages: this.state.messages
+                }),
+                _react2.default.createElement(MessageForm, {
+                    onMessageSubmit: this.handleMessageSubmit,
+                    user: this.state.user,
+                    src: this.state.src
+                })
+            ) : _react2.default.createElement(
+                'div',
+                { id: 'Login' },
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    'Login'
+                ),
+                _react2.default.createElement(_reactFacebookLogin2.default, {
+                    appId: '101547387036328',
+                    autoLoad: true,
+                    buttonStyle: { fontSize: 12 },
+                    callback: this.state.responseFacebook
 
-        }),
-        _react2.default.createElement(
-          'h2',
-          null,
-          ' '
-        ),
-        _react2.default.createElement(_reactGoogleLogin2.default, {
-          clientId: _keys.key,
-          buttonText: 'Login',
-          onSuccess: this.state.successGoogle,
-          onFailure: this.state.failureGoogle
-        })
-      )
-    );
-  }
+                }),
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    ' '
+                ),
+                _react2.default.createElement(_reactGoogleLogin2.default, {
+                    clientId: _keys.key,
+                    buttonText: 'Login',
+                    onSuccess: this.state.successGoogle,
+                    onFailure: this.state.failureGoogle
+                })
+            )
+        );
+    }
 });
 
 //deals with background image
 
 var GiveMeACat = function (_Component) {
-  _inherits(GiveMeACat, _Component);
+    _inherits(GiveMeACat, _Component);
 
-  function GiveMeACat(props) {
-    _classCallCheck(this, GiveMeACat);
+    function GiveMeACat(props) {
+        _classCallCheck(this, GiveMeACat);
 
-    var _this5 = _possibleConstructorReturn(this, (GiveMeACat.__proto__ || Object.getPrototypeOf(GiveMeACat)).call(this, props));
+        var _this5 = _possibleConstructorReturn(this, (GiveMeACat.__proto__ || Object.getPrototypeOf(GiveMeACat)).call(this, props));
 
-    _this5.state = {
-      fetchedData: _react2.default.PropTypes.string
-    };
-    return _this5;
-  }
-
-  _createClass(GiveMeACat, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.setState({
-        fetchedData: 'http://media.gettyimages.com/photos/-id171153429'
-
-      });
+        _this5.state = {
+            fetchedData: _react2.default.PropTypes.string
+        };
+        return _this5;
     }
-  }, {
-    key: 'render',
-    value: function render() {
-      //console.log(this.state.fetchedData);
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement('img', { id: 'background', src: this.state.fetchedData, alt: 'Cuteness' })
-      );
-    }
-  }]);
 
-  return GiveMeACat;
+    _createClass(GiveMeACat, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.setState({
+                fetchedData: 'http://media.gettyimages.com/photos/-id171153429'
+
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            //console.log(this.state.fetchedData);
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement('img', { id: 'background', src: this.state.fetchedData, alt: 'Cuteness' })
+            );
+        }
+    }]);
+
+    return GiveMeACat;
 }(_react.Component);
 
 var Chat = exports.Chat = function (_React$Component4) {
-  _inherits(Chat, _React$Component4);
+    _inherits(Chat, _React$Component4);
 
-  function Chat() {
-    _classCallCheck(this, Chat);
+    function Chat() {
+        _classCallCheck(this, Chat);
 
-    return _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).apply(this, arguments));
-  }
-
-  _createClass(Chat, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'Chat' },
-        _react2.default.createElement(ChatApp, null),
-        _react2.default.createElement(GiveMeACat, null)
-      );
+        return _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).apply(this, arguments));
     }
-  }]);
 
-  return Chat;
+    _createClass(Chat, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'Chat' },
+                _react2.default.createElement(ChatApp, null),
+                _react2.default.createElement(GiveMeACat, null)
+            );
+        }
+    }]);
+
+    return Chat;
 }(_react2.default.Component);
 
 /***/ }),
