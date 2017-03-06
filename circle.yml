@@ -2,3 +2,9 @@ test:
     override:
         - python -m tests/unit_tests
         - python -m tests/socketio_tests
+        - python -m tests/integration_tests
+deployment:
+    production:
+        branch: master
+        heroku:
+            appname: afternoon-coast-65975
