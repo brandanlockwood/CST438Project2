@@ -4,4 +4,4 @@ chatterbot
 psycopg2
 Flask-SQLAlchemy
 Flask-Testing 
-
+pyshorteners
