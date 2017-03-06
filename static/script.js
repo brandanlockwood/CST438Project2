@@ -13603,6 +13603,9 @@ var ChatApp = _react2.default.createClass({
         socket.on('bot', this._botMessage);
         socket.on('disconnect', function () {});
     },
+
+
+    //event handler for google or facebook login it google which will emit to server on success
     _login: function _login(data) {
         var _this4 = this;
 
@@ -13620,6 +13623,8 @@ var ChatApp = _react2.default.createClass({
             }
         };
     },
+
+    //event handler for initializing data for the new user
     _initialize: function _initialize(data) {
         var users = data.users,
             name = data.name,
@@ -13634,13 +13639,17 @@ var ChatApp = _react2.default.createClass({
         }
         this.setState({ users: users, user: name, src: src });
     },
+
+    //event handler for message from server event
     _messageRecieve: function _messageRecieve(message) {
         var messages = this.state.messages;
+        //console.log(message["url"] +"new message");
 
-        console.log(message["url"] + "new message");
         messages.push(message);
         this.setState({ messages: messages });
     },
+
+    //event handler for new bot message event
     _botMessage: function _botMessage(message) {
         var messages = this.state.messages;
         var text = message.text,
@@ -13662,6 +13671,9 @@ var ChatApp = _react2.default.createClass({
         }
         this.setState({ messages: messages });
     },
+
+
+    //event handler for user join event
     _userJoined: function _userJoined(data) {
         var _state = this.state,
             users = _state.users,
@@ -13683,6 +13695,8 @@ var ChatApp = _react2.default.createClass({
         this.state.numberOfUsers = users.length - 1;
         this.setState({ users: users, messages: messages }, this.numberOfUsers);
     },
+
+    //event handler for user left event
     _userLeft: function _userLeft(data) {
         var _state2 = this.state,
             users = _state2.users,
@@ -13701,32 +13715,14 @@ var ChatApp = _react2.default.createClass({
         this.state.numberOfUsers = users.length - 1;
         this.setState({ users: users, messages: messages }, this.numberOfUsers);
     },
+
+
+    //event handler
     handleMessageSubmit: function handleMessageSubmit(message) {
         var messages = this.state.messages;
 
         var audio = document.getElementById("audio");
         audio.play();
-        /*
-        if (validUrl.isUri(message.text)){
-          console.log(message.text);
-          if(message.text.match(/\.(jpeg|jpg|gif|png)$/) != null)
-          {
-            console.log('image');
-            message.img=message.text
-          }
-          else{
-            console.log('not an image');
-            message.url=message.text
-          }
-          
-        } else {
-          console.log(message.text);
-        }
-        
-        messages.push(message);
-        this.setState({messages});
-        //console.log(message.text)
-        */
         socket.emit('send:message', message);
         if (message.text.includes("!!")) {
             socket.emit('bot', message);

@@ -36,11 +36,12 @@ def on_connect():
  emit('login','Login stuff')
  emit('init',{'users':[],'name':'','src':''},namespace='/')
  
-   
+#Deal with google login stuff
 @socketio.on('login')
 def login(data):
  messageList=[]
  messsages=[]
+ #grab all messages
  messages=models.ChatMessage.query.all()
  for m in messages:
   #print m.name
@@ -59,6 +60,7 @@ def login(data):
  models.db.session.commit()
  #messageList.append({'user': 'APPLICATION BOT','text' : data['name'] +' Joined','src':'http://vignette4.wikia.nocookie.net/scribblenauts/images/b/b3/Robot_Female.png/revision/latest?cb=20130119185217'})
 
+#Deal with facebook login stuff
 @socketio.on("facebookLogin")
 def facebookLogin(data):
   messageList=[]
@@ -71,6 +73,7 @@ def facebookLogin(data):
    #print m
    #setup list to push down to client
    messageList.append({'user':m.name,'src':m.src,'text':m.text})
+   #get user image with request to facebook graph api
   response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token='+ data)
   json = response.json()
   #Add user to list
@@ -81,6 +84,7 @@ def facebookLogin(data):
   socketio.emit('user:join', {'name': json['name'],'src':json['picture']['data']['url'],'show':True},broadcast=True,include_self=False)
   emit('user:join', {'name': json['name'],'src':json['picture']['data']['url'],'show':False})
   #add application bot message
+  #add user join message
   userAdd=models.ChatMessage('APPLICATION BOT','http://i.imgur.com/94pZ4.gif',json['name'] +' Joined')
   models.db.session.add(userAdd)
   models.db.session.commit()
@@ -98,12 +102,13 @@ def message_in(message):
      print "is a url"
      if getInfo.isImage(url):
       print "is image"
-      
+      #shortens url of image
       shortener = Shortener('Tinyurl')
       url=format(shortener.short(url))
       message={"user":message["user"],"src":message["src"],"url":url,"img":url}
       newMessage=models.ChatMessage(message["user"],message["src"],url)
      else:
+      #shortens url of url
       shortener = Shortener('Tinyurl')
       url=format(shortener.short(url))
       message={"user":message["user"],"src":message["src"],"url":url}
@@ -112,7 +117,7 @@ def message_in(message):
      newMessage=models.ChatMessage(message["user"],message["src"],message["text"])
      print "not a url"
     print 'message sent'
-    
+    #add message to db
     models.db.session.add(newMessage)
     models.db.session.commit()
     socketio.emit('send:message',message, broadcast=True,include_self=True)
@@ -124,13 +129,14 @@ def bot_message(message):
  message = getInfo.chatBotMessage(str(message["text"]))
  #print message
  command="!! chatBot"
- 
+ #chatBot command
  if(command in message and "!! help" not in message):
+  #get chatBot response
   newMessage=message.replace(command,"")
   newMessage=str(chatbot.get_response(message))
   print repr(newMessage)
-  #messages.append(newMessage)
-  #add message to db
+ 
+  #save chat bot response to db
   botMessage=models.ChatMessage('APPLICATION BOT','http://i.imgur.com/94pZ4.gif',newMessage)
   models.db.session.add(botMessage)
   models.db.session.commit()
@@ -138,6 +144,7 @@ def bot_message(message):
   socketio.emit('bot',{"text":newMessage},broadcast=True,include_self=True)
  elif("!! find" in message and "!! help" not in message):
   message=message[8:]
+  #get events from SeatGeek API
   items=getInfo.getEvents(message)
   print "No events in this area" in items
   if "No events in this area" in items:
@@ -145,7 +152,6 @@ def bot_message(message):
   else:
    socketio.emit('bot',{"list":items,"text":"Rock on"},broadcast=True,include_self=True)
  else:
-  #messages.append(message)
   #add bot message to db
   botMessage=models.ChatMessage('APPLICATION BOT','http://i.imgur.com/94pZ4.gif',message)
   models.db.session.add(botMessage)

@@ -200,7 +200,7 @@ var ChatApp = React.createClass({
       });
   },
 
-
+ //event handler for google or facebook login it google which will emit to server on success
   _login(data)
   {
        
@@ -226,6 +226,7 @@ var ChatApp = React.createClass({
         
     
   },
+  //event handler for initializing data for the new user
   _initialize(data) {
       var {users, name,src,messages} = data;
       this.state.messages=messages;
@@ -237,13 +238,14 @@ var ChatApp = React.createClass({
       }
       this.setState({users, user: name,src: src});
   },
-
+  //event handler for message from server event
   _messageRecieve(message) {
       var {messages} = this.state;
-      console.log(message["url"] +"new message");
+      //console.log(message["url"] +"new message");
       messages.push(message);
       this.setState({messages});
   },
+  //event handler for new bot message event
   _botMessage(message)
   {
     var {messages} = this.state
@@ -267,7 +269,7 @@ var ChatApp = React.createClass({
       this.setState({messages});
   },
   
-
+ //event handler for user join event
   _userJoined(data) {
       var {users, messages} = this.state;
       var {name,src,show} = data;
@@ -285,7 +287,7 @@ var ChatApp = React.createClass({
        this.state.numberOfUsers=users.length-1;
       this.setState({users, messages},this.numberOfUsers);
   },
-
+  //event handler for user left event
   _userLeft(data) {
     
       var {users, messages} = this.state;
@@ -303,32 +305,11 @@ var ChatApp = React.createClass({
   },
 
 
-
+ //event handler
   handleMessageSubmit(message) {
       var {messages} = this.state;
       var audio = document.getElementById("audio");
       audio.play();
-      /*
-      if (validUrl.isUri(message.text)){
-        console.log(message.text);
-        if(message.text.match(/\.(jpeg|jpg|gif|png)$/) != null)
-        {
-          console.log('image');
-          message.img=message.text
-        }
-        else{
-          console.log('not an image');
-          message.url=message.text
-        }
-        
-      } else {
-        console.log(message.text);
-      }
-      
-      messages.push(message);
-      this.setState({messages});
-      //console.log(message.text)
-      */
       socket.emit('send:message', message);
       if (message.text.includes("!!"))
       {

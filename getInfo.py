@@ -3,6 +3,7 @@ import calendar
 import requests,json
 import os
 import urlparse
+#chat bot commands
 def chatBotMessage(message):
     commands =['!! about',"!! help","!! say","!! chatBot","!! smile","!! find","!! rock on","!!"]
     if commands[0] in message:
@@ -22,14 +23,14 @@ def chatBotMessage(message):
         return "\m/  (  -_-   )  \m/"
     elif commands [7] in message[:2]:
         return "Sorry I didn't get that"
-
+#check if url is a url
 def isUrl(url):
     parts = urlparse.urlsplit(url)
     if not parts.scheme or not parts.netloc: 
      return False
     else:
      return True
-
+#check if the imgUrl is an image
 def isImage(imgUrl):
     image=False
     endings=[".png", ".jpg", ".jpeg",".gif"]
@@ -37,7 +38,7 @@ def isImage(imgUrl):
         if end in imgUrl:
             image=True
     return image
-    
+#Send request to SeatGeek api for events and parse through json
 def getEvents(zipCode):
     events=[]
     local_events=[]
@@ -81,6 +82,7 @@ def getEvents(zipCode):
             #print json.dumps(i["venue"],indent=2)
             #print json.dumps(i["performers"],indent=2)
             #print json.dumps(local_events, indent=2)
+
 def getMonth(string):
     string =string.lower()
     months= {
