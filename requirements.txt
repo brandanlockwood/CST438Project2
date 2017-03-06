@@ -3,5 +3,5 @@ flask_socketio
 chatterbot
 psycopg2
 Flask-SQLAlchemy
-
+Flask-Testing 
 
