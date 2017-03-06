@@ -125,8 +125,13 @@ def bot_message(message):
   #push bot message to all clients
   socketio.emit('bot',{"text":newMessage},broadcast=True,include_self=True)
  elif("!! find" in message and "!! help" not in message):
-  items=getInfo.getEvents()
-  socketio.emit('bot',{"list":items,"text":"yes"},broadcast=True,include_self=True)
+  message=message[8:]
+  items=getInfo.getEvents(message)
+  print "No events in this area" in items
+  if "No events in this area" in items:
+   socketio.emit('bot',{"text":"No concerts found"},broadcast=True,include_self=True)
+  else:
+   socketio.emit('bot',{"list":items,"text":"yes"},broadcast=True,include_self=True)
  else:
   #messages.append(message)
   #add bot message to db

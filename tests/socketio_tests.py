@@ -70,5 +70,6 @@ class SocketIOTestCase(unittest.TestCase):
    client = app.socketio.test_client(app.app)
    client.emit('disconnect')
    r = client.get_received()
+   
 if __name__ == '__main__':
  unittest.main()

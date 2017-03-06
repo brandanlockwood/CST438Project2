@@ -13652,8 +13652,9 @@ var ChatApp = _react2.default.createClass({
         var messages = this.state.messages;
         var text = message.text,
             list = message.list;
+        //console.log(list)
+        //console.log(list.length)
 
-        console.log(list);
         if (list != undefined) {
             messages.push({ user: 'APPLICATION BOT',
                 text: text,

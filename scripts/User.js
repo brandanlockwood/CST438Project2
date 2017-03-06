@@ -247,7 +247,8 @@ var ChatApp = React.createClass({
   {
     var {messages} = this.state
      var {text,list}=message
-     console.log(list)
+     //console.log(list)
+     //console.log(list.length)
      if (list!=undefined)
      {
      messages.push({ user: 'APPLICATION BOT',
