@@ -8,7 +8,7 @@ def chatBotMessage(message):
     if commands[0] in message:
         return "This room is for authorized potatos only"
     elif commands[1] in message:
-        return "!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make bot a little happier !! find find local concerts in your area !! find <zipcode> find concerts in the zipcode area"
+        return "!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make bot a little happier !! find <zipcode> find concerts in the zipcode area"
     elif commands[2] in message:
         print message[7:] 
         return message[7:]
@@ -41,10 +41,10 @@ def getEvents(zipCode):
     local_events=[]
     print zipCode
     local_events=[]
-    if len(zipCode)>4:
+    if len(zipCode)==5 and zipCode.isdigit():
         local_events=requests.get("https://api.seatgeek.com/2/events?client_id="+os.getenv("client_id")+"&postal_code="+zipCode+"&range=20mi&sort=datetime_local.asc&taxonomies.name=concert&page=1&per_page=5")
     else:
-        local_events=requests.get("https://api.seatgeek.com/2/events?client_id="+os.getenv("client_id")+"&geoip=true&range=20mi&sort=datetime_local.asc&taxonomies.name=concert&page=1&per_page=5")
+        return "No events in this area"
     print json.dumps(local_events.json(),indent=2)
         
     local_events=local_events.json()

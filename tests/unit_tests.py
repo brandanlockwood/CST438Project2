@@ -37,7 +37,7 @@ class function_Test(unittest.TestCase):
         self.assertEquals(response,"!! find")
     def test_command_help(self):
         response = getInfo.chatBotMessage("!! help")
-        self.assertEquals(response,"!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make bot a little happier !! find find local concerts in your area !! find <zipcode> find concerts in the zipcode area")
+        self.assertEquals(response,"!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make bot a little happier !! find <zipcode> find concerts in the zipcode area")
     def test_command_say(self):
         response = getInfo.chatBotMessage("!! say something")
         self.assertEquals(response,"something")
