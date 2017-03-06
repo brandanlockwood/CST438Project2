@@ -8,7 +8,7 @@ def chatBotMessage(message):
     if commands[0] in message:
         return "This room is for authorized potatos only"
     elif commands[1] in message:
-        return "!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make bot a little happier !! find find local concerts in your area !! find <zipcode> find concerts in the zipcode area "
+        return "!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make bot a little happier !! find find local concerts in your area !! find <zipcode> find concerts in the zipcode area"
     elif commands[2] in message:
         print message[7:] 
         return message[7:]
