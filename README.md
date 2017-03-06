@@ -14,5 +14,5 @@
 4. **How would you improve it if you had more time?**
 
  - I would have a log out button for the user. Try to fix the issue of having the user able to sign in multiple times allowing multiples instances of those users.
- - 
+
 5. **No improvements from handin 1**
