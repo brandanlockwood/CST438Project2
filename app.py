@@ -143,7 +143,7 @@ def bot_message(message):
   if "No events in this area" in items:
    socketio.emit('bot',{"text":"No concerts found"},broadcast=True,include_self=True)
   else:
-   socketio.emit('bot',{"list":items,"text":"yes"},broadcast=True,include_self=True)
+   socketio.emit('bot',{"list":items,"text":"Rock on"},broadcast=True,include_self=True)
  else:
   #messages.append(message)
   #add bot message to db

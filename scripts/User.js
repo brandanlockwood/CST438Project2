@@ -99,13 +99,13 @@ var Message = React.createClass({
               }
               {console.log(this.props.url)}
               {this.props.url!=""&&this.props.url!=undefined &&
-              <div>
+              
               <a href={this.props.url} target='_blank'>Link</a>
-              </div>
+              
               }
                {this.props.img!=""&&this.props.img!=undefined &&
               <div>
-              <img src={this.props.img} width="200" height="200"/>
+              <img src={this.props.img} width="400" height="200"/>
               </div>
               }
               {this.props.list!=undefined&&

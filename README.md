@@ -1,11 +1,11 @@
 ## PROJECT 2 part 2
 1. **What is the theme you’ll be using for project 2?**
 
- - Techno
+ - Rock
 
-2. **How did you incorporate your theme within your project?**
+2. **How did you incorporate your theme using APIs, your bot, and styling, within your project?**
 
- - Through the text font,color, and sound.
+ - Using the SeatGeek API users will find local concerts and the bot has new command called rock on to allow it to rock.The text font,color, and background image all have harsh style to them.
 
 3. **What are known problems, if any, with your project?**
 

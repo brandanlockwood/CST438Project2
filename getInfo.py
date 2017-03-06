@@ -4,11 +4,11 @@ import requests,json
 import os
 import urlparse
 def chatBotMessage(message):
-    commands =['!! about',"!! help","!! say","!! chatBot","!! smile","!! find","!!"]
+    commands =['!! about',"!! help","!! say","!! chatBot","!! smile","!! find","!! rock on","!!"]
     if commands[0] in message:
         return "This room is for authorized potatos only"
     elif commands[1] in message:
-        return "!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make bot a little happier !! find <zipcode> find concerts in the zipcode area"
+        return "!! about -gives description of room !! help -gives all commands of the room !! say <something> -makes me say <something> !! chatBot <something> -say something to chatterbot !! smile -to make the bot a little happier !! find <zipcode> find concerts in the zipcode area !! rock on makes bot rock"
     elif commands[2] in message:
         print message[7:] 
         return message[7:]
@@ -18,7 +18,9 @@ def chatBotMessage(message):
         return "=]"
     elif commands [5] in message:
         return message
-    elif commands [6] in message[:2]:
+    elif commands [6] in message:
+        return "\m/  (  -_-   )  \m/"
+    elif commands [7] in message[:2]:
         return "Sorry I didn't get that"
 
 def isUrl(url):
