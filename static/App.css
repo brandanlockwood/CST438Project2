@@ -27,7 +27,7 @@ body{
     left:40%;
 }
 #userText{
-    padding:;
+   
 }
 #background
 {
@@ -52,7 +52,7 @@ body{
  font-family: 'Wallpoet', sans-serif;
 color:rgb(192,192,192);
   width:60%;
-  top:93%;
+  top:92%;
   
   
 }
@@ -78,6 +78,9 @@ color:rgb(192,192,192);
 #message {
 
 background-color:rgba(255, 51,0,0.4);
+padding-bottom: 10px;
+padding-top :10px;
+padding-right: 10px;
 }
 #onlineUsers
 {
@@ -110,7 +113,7 @@ color:rgb(192,192,192);
 
 #messageHeader
 {
-    top:2%;
+    top:3%;
     border-radius: 13px;
     text-align:center;
    left:25%; 
@@ -123,8 +126,7 @@ color:rgb(192,192,192);
 }
 #messageList{
   
-    padding-top:15px;
-    padding-bottom:10px;
+    
     border-radius: 10px;
     text-align:center;
   height:78%;
@@ -133,7 +135,7 @@ color:rgb(192,192,192);
   font-size: 25px;
 font-family: 'Wallpoet', sans-serif;
 color:rgb(192,192,192);
-  top:12%;
+  top:14%;
   left:25%;
   background-color:rgba(0,0,0,0.7);
   overflow-y: auto;

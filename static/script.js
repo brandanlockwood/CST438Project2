@@ -13536,7 +13536,7 @@ var Message = _react2.default.createClass({
             this.props.img != "" && this.props.img != undefined && _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement('img', { src: this.props.img })
+                _react2.default.createElement('img', { src: this.props.img, width: '200', height: '200' })
             ),
             this.props.list != undefined && this.props.list.map(function (item, i) {
                 //console.log(message);
@@ -13645,6 +13645,7 @@ var ChatApp = _react2.default.createClass({
     _messageRecieve: function _messageRecieve(message) {
         var messages = this.state.messages;
 
+        console.log(message["url"] + "new message");
         messages.push(message);
         this.setState({ messages: messages });
     },
@@ -13713,22 +13714,27 @@ var ChatApp = _react2.default.createClass({
 
         var audio = document.getElementById("audio");
         audio.play();
-        if (validUrl.isUri(message.text)) {
-            console.log(message.text);
-            if (message.text.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-                console.log('image');
-                message.img = message.text;
-            } else {
-                console.log('not an image');
-                message.url = message.text;
-            }
+        /*
+        if (validUrl.isUri(message.text)){
+          console.log(message.text);
+          if(message.text.match(/\.(jpeg|jpg|gif|png)$/) != null)
+          {
+            console.log('image');
+            message.img=message.text
+          }
+          else{
+            console.log('not an image');
+            message.url=message.text
+          }
+          
         } else {
-            console.log(message.text);
+          console.log(message.text);
         }
-
+        
         messages.push(message);
-        this.setState({ messages: messages });
+        this.setState({messages});
         //console.log(message.text)
+        */
         socket.emit('send:message', message);
         if (message.text.includes("!!")) {
             socket.emit('bot', message);

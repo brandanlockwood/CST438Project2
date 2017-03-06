@@ -105,7 +105,7 @@ var Message = React.createClass({
               }
                {this.props.img!=""&&this.props.img!=undefined &&
               <div>
-              <img src={this.props.img}/>
+              <img src={this.props.img} width="200" height="200"/>
               </div>
               }
               {this.props.list!=undefined&&
@@ -240,6 +240,7 @@ var ChatApp = React.createClass({
 
   _messageRecieve(message) {
       var {messages} = this.state;
+      console.log(message["url"] +"new message");
       messages.push(message);
       this.setState({messages});
   },
@@ -307,6 +308,7 @@ var ChatApp = React.createClass({
       var {messages} = this.state;
       var audio = document.getElementById("audio");
       audio.play();
+      /*
       if (validUrl.isUri(message.text)){
         console.log(message.text);
         if(message.text.match(/\.(jpeg|jpg|gif|png)$/) != null)
@@ -326,6 +328,7 @@ var ChatApp = React.createClass({
       messages.push(message);
       this.setState({messages});
       //console.log(message.text)
+      */
       socket.emit('send:message', message);
       if (message.text.includes("!!"))
       {

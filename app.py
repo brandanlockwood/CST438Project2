@@ -4,6 +4,7 @@ from flask_socketio import emit,send
 from chatterbot import ChatBot
 import json
 import getInfo
+from pyshorteners import Shortener
 
 
 app = flask.Flask(__name__)
@@ -90,20 +91,31 @@ def message_in(message):
     #print message["text"]
     #messages.append(message)
     #add message to db
-    newMessage=models.ChatMessage(message["user"],message["src"],message["text"])
+    print message
+    url = str(message["text"])
+    print getInfo.isUrl(url)
+    if getInfo.isUrl(url):
+     print "is a url"
+     if getInfo.isImage(url):
+      print "is image"
+      
+      shortener = Shortener('Tinyurl')
+      url=format(shortener.short(url))
+      message={"user":message["user"],"src":message["src"],"url":url,"img":url}
+      newMessage=models.ChatMessage(message["user"],message["src"],url)
+     else:
+      shortener = Shortener('Tinyurl')
+      url=format(shortener.short(url))
+      message={"user":message["user"],"src":message["src"],"url":url}
+      newMessage=models.ChatMessage(message["user"],message["src"],url)
+    else:
+     newMessage=models.ChatMessage(message["user"],message["src"],message["text"])
+     print "not a url"
+    print 'message sent'
+    
     models.db.session.add(newMessage)
     models.db.session.commit()
-    url = str(message["text"])
-    if getInfo.isUrl(url):
-     print "not an url"
-    else:
-     #print "I got here"
-     if getInfo.isImage(url):
-      message={"user":message["user"],"src":message["src"],"text":url,"img":url}
-     else:
-      message={"user":message["user"],"src":message["src"],"text":url,"url":url}
-    print 'message sent'
-    socketio.emit('send:message',message, broadcast=True,include_self=False)
+    socketio.emit('send:message',message, broadcast=True,include_self=True)
 
 
 @socketio.on('bot')
