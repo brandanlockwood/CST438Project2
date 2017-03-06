@@ -13527,13 +13527,9 @@ var Message = _react2.default.createClass({
             this.props.url != "" && this.props.url != undefined && _react2.default.createElement(
                 'a',
                 { href: this.props.url, target: '_blank' },
-                'Link'
+                this.props.url
             ),
-            this.props.img != "" && this.props.img != undefined && _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement('img', { src: this.props.img, width: '400', height: '200' })
-            ),
+            this.props.img != "" && this.props.img != undefined && _react2.default.createElement('img', { src: this.props.img, width: '400', height: '200' }),
             this.props.list != undefined && this.props.list.map(function (item, i) {
                 //console.log(message);
                 return _react2.default.createElement(Event, {

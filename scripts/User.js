@@ -100,13 +100,13 @@ var Message = React.createClass({
               {console.log(this.props.url)}
               {this.props.url!=""&&this.props.url!=undefined &&
               
-              <a href={this.props.url} target='_blank'>Link</a>
+              <a href={this.props.url} target='_blank'>{this.props.url}</a>
               
               }
                {this.props.img!=""&&this.props.img!=undefined &&
-              <div>
+             
               <img src={this.props.img} width="400" height="200"/>
-              </div>
+              
               }
               {this.props.list!=undefined&&
                 this.props.list.map((item, i) => {

@@ -101,7 +101,7 @@ def message_in(message):
       
       shortener = Shortener('Tinyurl')
       url=format(shortener.short(url))
-      message={"user":message["user"],"src":message["src"],"url":url,"img":url}
+      message={"user":message["user"],"src":message["src"],"img":url}
       newMessage=models.ChatMessage(message["user"],message["src"],url)
      else:
       shortener = Shortener('Tinyurl')
