@@ -1,4 +1,4 @@
-## PROJECT 2 part 2
+﻿## PROJECT 2 part 2
 1. **What is the theme you’ll be using for project 2?**
 
  - Rock
@@ -16,3 +16,9 @@
  - I would have a log out button for the user. Try to fix the issue of having the user able to sign in multiple times allowing multiples instances of those users.
 
 5. **No improvements from handin 1**
+
+6. **Screenshots**
+
+![alt text](https://github.com/brandanlockwood/CST438Project2/blob/master/screenshots/2017-08-23.png)
+
+![alt text](https://github.com/brandanlockwood/CST438Project2/blob/master/screenshots/2017-08-24.png)
